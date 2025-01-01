@@ -37,10 +37,26 @@ const Tsigsar = () => {
           <input className=' ml-4 outline-none mt-2 text-2xl w-96'></input>
         </div>
 
-        <div className=' flex space-x-36 mt-6'>
+        <div className=' flex mt-6'>
             <p className=' text-2xl'>མ་ཚིག་གསར་པ།</p>
-            <p className=' text-2xl'>རྒྱུན་སྤྱོད།</p>
-            <div className=' text-2xl'>འབྱུང་ཁུངས།</div>
+            <div className=" ml-2 mt-3 flex items-center justify-center">
+              <label className="relative inline-block w-12 h-6 cursor-pointer">
+                <input type="checkbox" className="sr-only peer"/>
+                <span className="block w-full h-full bg-gray-300 rounded-full peer-checked:bg-blue-500"></span>
+                <span className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition peer-checked:translate-x-6"></span>
+              </label>
+            </div>
+
+            <p className=' text-2xl ml-12'>རྒྱུན་སྤྱོད།</p>
+            <div className=" ml-2 mt-3 flex items-center justify-center">
+              <label className="relative inline-block w-12 h-6 cursor-pointer">
+                <input type="checkbox" className="sr-only peer"/>
+                <span className="block w-full h-full bg-gray-300 rounded-full peer-checked:bg-blue-500"></span>
+                <span className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition peer-checked:translate-x-6"></span>
+              </label>
+            </div>
+
+            <div className=' text-2xl ml-12'>འབྱུང་ཁུངས།</div>
         </div>
 
         <button className=' flex justify-center mt-8 w-28 rounded-md h-8 bg-gray-200 pb-5 gap-4 font-semibold transition-all duration-150 hover:opacity-80'>འགྲེལ་བཤད། <img src={plus} className=' w-4 mt-2'/></button>
