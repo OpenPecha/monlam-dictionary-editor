@@ -41,7 +41,7 @@ const Parkhang = () => {
         <div className=' flex space-x-2 mt-6 bg-slate-300 p-2 rounded-md w-28 h-8'>
           <img src={home} className=' w-4 h-4 cursor-pointer' onClick={() => goTo('home')}></img>
           <img src={arrow} className=' w-2 h-5'></img>
-          <p className=' '>དཔར་ཁང་།</p>
+          <p className=' font-semibold'>དཔར་ཁང་།</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
