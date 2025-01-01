@@ -1,4 +1,3 @@
-import React from 'react'
 import cat from '../assets/cat.jpg'
 import logo from '../assets/logo.png'
 import { useNavigate } from 'react-router-dom'
