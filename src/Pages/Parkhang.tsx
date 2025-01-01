@@ -3,9 +3,28 @@ import logo from '../assets/logo.png'
 import home from '../assets/home.png'
 import arrow from '../assets/arrow.png'
 import { useNavigate } from 'react-router-dom'
+import { useForm, SubmitHandler } from 'react-hook-form'
+
+interface Input {
+  name: string,
+  chakyul: string
+}
 
 const Parkhang = () => {
   const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: {errors},
+  } = useForm<Input>()
+
+  const onSubmit: SubmitHandler<Input> = (data) => {
+    console.log(data);
+    reset();
+  }
+
   function goTo(location: string) {
     if (location === 'home') {
       navigate('/');
@@ -25,14 +44,17 @@ const Parkhang = () => {
           <p className=' '>དཔར་ཁང་།</p>
         </div>
 
-        <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-1/3'>
-          <label className=' text-2xl'>མིང་།</label>
-          <input className=' ml-14 outline-none mt-2 text-2xl w-96'></input>
-        </div>
-        <div className=' flex items-center border-b-2 border-black mt-2 pb-2 w-1/3'>
-          <label className=' text-2xl'>ཆགས་ཡུལ།</label>
-          <input className=' ml-6 outline-none mt-2 text-2xl w-96'></input>
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-1/3'>
+            <label className=' text-2xl'>མིང་།</label>
+            <input className=' ml-14 outline-none mt-2 text-2xl w-96' {...register('name', { required: true })}></input>
+          </div>
+          <div className=' flex items-center border-b-2 border-black mt-2 pb-2 w-1/3'>
+            <label className=' text-2xl'>ཆགས་ཡུལ།</label>
+            <input className=' ml-6 outline-none mt-2 text-2xl w-96' {...register('chakyul', {required: true})}></input>
+          </div>
+          <button type='submit' className=' fixed bottom-14 right-20 bg-slate-400 pl-10 pr-10 pt-1 pb-1 rounded-md hover:opacity-80 active:opacity-50'>Submit</button>
+        </form>
       </div>
     </>
   )
