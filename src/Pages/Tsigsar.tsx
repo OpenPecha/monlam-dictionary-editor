@@ -51,33 +51,41 @@ const Tsigsar = () => {
     <>
       <div className=' ml-16 mt-16'>
         <img src={logo} className=' w-16 rounded-md'></img>
-        <p className=' text-4xl font-monlam'>སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག</p>
+        <p className=' text-xl font-semibold mt-2 font-monlam'>སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག</p>
         <div className=' flex space-x-2 mt-6 bg-slate-300 p-2 rounded-md w-28 h-8'>
           <img src={home} className=' w-4 h-4 cursor-pointer' onClick={() => goTo('home')}></img>
           <img src={arrow} className=' w-2 h-5'></img>
-          <p className=' font-monlam'>ཚིག་གསར།</p>
+          <p className=' text-sm font-monlam'>ཚིག་གསར།</p>
         </div>
 
-        <div className=' mt-6'>
+        <div className=' font-monlam mt-6'>
           <StatusPending />
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
 
-          <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-2/4'>
-            <label className=' text-3xl font-monlam'>མ་ཚིག</label>
-            <input className=' ml-4 outline-none mt-2 text-2xl w-3/4' {...register('matsig')}></input>
+          <div className=' flex items-center border-b-2 border-black mt-4 pb-2 w-2/4'>
+            <label className=' text-lg font-monlam'>མ་ཚིག</label>
+            <input className=' ml-4 outline-none mt-2 text-lg w-3/4' {...register('matsig')}></input>
           </div>
 
-          <div className=' flex mt-6'>
-              <p className=' text-3xl font-monlam'>མ་ཚིག་གསར་པ།</p>
-              <Toggle register={register} value='newMatsig' />
-
-              <p className=' text-3xl ml-12 font-monlam'>རྒྱུན་སྤྱོད།</p>
+          <div className=' flex mt-4'>
+            <div className=' flex items-center'>
+            <p className=' text-lg font-monlam'>མ་ཚིག་གསར་པ།</p>
+            <div className=' mb-2'>
+            <Toggle register={register} value='newMatsig' />
+            </div>
+            
+            </div>
+              
+            <div className=' flex items-center'>
+              <p className=' text-lg ml-12 font-monlam'>རྒྱུན་སྤྱོད།</p>
+              <div className=' mb-2'>
               <Toggle register={register} value='gyunchoe'/>
-
+              </div>
+            </div>
               <div>
-                <div className=' text-3xl ml-12 font-monlam cursor-pointer border-b-2 border-black pb-2 w-52 flex justify-between' onClick={toggleSource}><p>འབྱུང་ཁུངས།</p>{sourceSeleced}</div>
+                <div className=' relative text-lg ml-12 font-monlam cursor-pointer border-b-2 border-black pb-2 w-52 flex justify-between' onClick={toggleSource}><p>འབྱུང་ཁུངས།</p>{sourceSeleced}</div>
                 {sourceOpen ? <DropDown options={sourceOption} setSelect={setSourceSelected} setOpen={setSourceOpen} /> : ''}
               </div>
           </div>

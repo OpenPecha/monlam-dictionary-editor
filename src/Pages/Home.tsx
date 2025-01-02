@@ -2,61 +2,74 @@ import cat from '../assets/cat.jpg'
 import logo from '../assets/logo.png'
 import { useNavigate } from 'react-router-dom'
 
+const pathlist = [
+    {
+        id: 1,
+        name: 'ཚིག་གསར།',
+        path: '/tsigsar'
+    },
+    {
+        id: 2,
+        name: 'དཔར་ཁང་།',
+        path: '/parkhang'
+    },
+    {
+        id: 3,
+        name: 'མི་སྣ།',
+        path: '/mina'
+    },
+    {
+        id: 4,
+        name: 'དཔེ་ཆ།',
+        path: '/pecha'
+    }
+]
+
 const Home = () => {
-
     const navigate = useNavigate();
-
-    function goTo(location: string): void {
-        if (location === 'tsigsar') {
-            navigate('/tsigsar');
-        } else if (location === 'parkhang') {
-            navigate('/parkhang');
-        } else if (location === 'mina') {
-            navigate('/mina');
-        } else if (location === 'pecha') {
-            navigate('/pecha');
+    
+    const goTo = (path: string): void => {
+        const location = path.substring(1); // Remove the leading slash
+        if (pathlist.some(item => item.path === path)) {
+            navigate(path);
         } else {
             console.log('Error in navigation');
         }
     }
 
-  return (
-    <>
-        <div>
-            <div className='flex align-middle justify-end p-5'>
-                <div className=' mt-2 mr-4'>
-                    <p className=' font-bold'>Tenzin Tsering</p>
-                    <p>Anotator</p>
+    return (
+        <>
+            <div>
+                <div className='flex align-middle justify-end p-5'>
+                    <div className='mt-2 mr-4'>
+                        <p className='font-bold'>Tenzin Tsering</p>
+                        <p>Anotator</p>
+                    </div>
+                    <img className='w-16 h-16 rounded-full object-cover' src={cat} alt="Profile" />
                 </div>
-                <img className=' w-16 h-16 rounded-full object-cover' src={cat}></img>
-            </div>
-            <div className='flex align-middle justify-center mt-8'>
-                <img className=' w-20 h-20 rounded-2xl' src={logo}></img>
-            </div>
-            <div className='flex align-middle justify-center'>
-                <p className=' cursor-default text-6xl font-monlam'>སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ།</p>
-            </div>
-            <div className='grid align-middle justify-center mt-8'>
-                <div onClick={() => goTo('tsigsar')} className=' rounded cursor-pointer transition-all duration-300 w-80 flex justify-between hover:bg-slate-200 pb-5 pl-2 pr-2'>
-                    <p className=' text-5xl font-monlam'>ཚིག་གསར།</p>
-                    <p className=' text-5xl'>+</p>
+
+                <div className='flex items-center justify-center mt-8 mb-2'>
+                    <img className=' w-16 h-16 rounded-md' src={logo} alt="Logo" />
                 </div>
-                <div onClick={() => goTo('parkhang')} className=' rounded cursor-pointer transition-all duration-300 w-80 flex justify-between hover:bg-slate-200 pb-5 pl-2 pr-2'>
-                    <p className=' text-5xl font-monlam'>དཔར་ཁང་།</p>
-                    <p className=' text-5xl'>+</p>
+                <div className='flex align-middle justify-center'>
+                    <p className='cursor-default text-2xl font-semibold font-monlam'>སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ།</p>
                 </div>
-                <div onClick={() => goTo('mina')} className=' rounded cursor-pointer transition-all duration-300 w-80 flex justify-between hover:bg-slate-200 pb-5 pl-2 pr-2'>
-                    <p className=' text-5xl font-monlam'>མི་སྣ།</p>
-                    <p className=' text-5xl'>+</p>
-                </div>
-                <div onClick={() => goTo('pecha')} className=' rounded cursor-pointer transition-all duration-300 w-80 flex justify-between hover:bg-slate-200 pb-5 pl-2 pr-2'>
-                    <p className=' text-5xl font-monlam'>དཔེ་ཆ།</p>
-                    <p className=' text-5xl'>+</p>
+
+                <div className='grid align-middle justify-center mt-8'>
+                    {pathlist.map((item) => (
+                        <div
+                            key={item.id}
+                            onClick={() => goTo(item.path)}
+                            className='rounded cursor-pointer transition-all w-72 flex justify-between items-center hover:bg-slate-100 p-2'
+                        >
+                            <p className=' text-lg font-medium font-monlam'>{item.name}</p>
+                            <p className='text-lg'>+</p>
+                        </div>
+                    ))}
                 </div>
             </div>
-        </div>
-    </>
-  )
+        </>
+    )
 }
 
 export default Home
