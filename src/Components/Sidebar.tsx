@@ -24,9 +24,9 @@ const Sidebar = () => {
         </div>
         <div className="border-t flex flex-col h-[calc(100vh-theme(space.14))] items-center justify-between p-4 border-t-[#5290F4] w-full">
           <div className="space-y-6">
-            <IoIosSearch className="h-5 w-5" />
-            <IoHomeOutline className="h-5 w-5" />
-            <FaPlus className="h-5 w-5" />
+            <IoIosSearch className="h-5 w-5 cursor-pointer" />
+            <IoHomeOutline className="h-5 w-5 cursor-pointer" />
+            <FaPlus className="h-5 w-5 cursor-pointer" />
           </div>
           <div>
             <p className="font-monlam text-xs [writing-mode:vertical-rl] rotate-180">
