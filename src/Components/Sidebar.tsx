@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { IoHomeOutline } from "react-icons/io5";
 import { RiArrowRightSLine } from "react-icons/ri";
-import sidebarimage from '../../public/images/sidebarimage.png'
+import sidebarimage from '/images/sidebarimage.png';
 import { FaPlus } from "react-icons/fa6";
 import Searchbar from "./Searchbar";
 import AddItem from "./AddItem";
@@ -36,13 +36,13 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div 
-        className={`flex-1 rounded-r-md flex flex-col h-screen transition-all duration-300 ${
+      <div
+        className={`flex-1 rounded-r-md h-screen transition-all duration-300 ${
           show ? 'w-[300px]' : 'w-0'
         }`}
       >
-        <div 
-          className={`transition-opacity duration-200 ${
+        <div
+          className={`h-full flex flex-col transition-opacity duration-200 ${
             show ? 'opacity-100' : 'opacity-0'
           } ${!show ? 'invisible' : ''}`}
         >
@@ -55,12 +55,12 @@ const Sidebar = () => {
               onClick={() => setShow(prev => !prev)}
             />
           </div>
-          <div className="p-4 flex-1 overflow-auto">
+          <div className="flex-1 p-4 overflow-auto">
             <Searchbar />
-            <AddItem/>
-            <Itemlist/>
+            <AddItem />
+            <Itemlist />
           </div>
-          <div className="h-[100px] mt-auto">
+          <div className="h-[100px] w-full">
             <img src={sidebarimage} alt="logo" className="w-full h-full object-contain" />
           </div>
         </div>
