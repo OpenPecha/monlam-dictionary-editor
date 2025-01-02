@@ -8,7 +8,7 @@ interface ChildProps {
 
 const DropDown: React.FC<ChildProps> = ( {options, setSelect, setOpen} ) => {
   return (
-    <div className=' absolute ml-11 mt-2 border rounded-md w-44 overflow-y-auto h-32'>
+    <div className=' absolute mt-2 border rounded-md w-56 overflow-y-auto h-32 bg-white'>
         {options.map((item,index) => (
             <div className=' hover:bg-slate-200 p-2 h-8 cursor-pointer' onClick={() => {setSelect(item); setOpen((pre) => !pre)}}>{item}</div>
         ))}

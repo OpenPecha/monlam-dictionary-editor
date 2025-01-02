@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../assets/logo.png'
 import home from '../assets/home.png'
 import arrow from '../assets/arrow.png'
 import { useNavigate } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import DropDown from '../Components/Dropdown/DropDown'
 
 interface Input {
   type: string,
@@ -15,6 +16,10 @@ interface Input {
 
 const Mina = () => {
   const navigate = useNavigate();
+
+  const [typeOpen, setTypeOpen] = useState<boolean>(false);
+  const [typeOption, setTypeOption] = useState<string[]>(['གདམ་ཀ ༡', 'གདམ་ཀ ༢', 'གདམ་ཀ ༣']);
+  const [typeSelected, setTypeSelected] = useState<string>('');
 
   const {
     register,
@@ -48,9 +53,12 @@ const Mina = () => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-        <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-2/4'>
-            <label className=' text-3xl font-monlam'>རིགས།</label>
-            <input className=' ml-14 outline-none mt-2 text-2xl w-96' {...register('type', { required: true })}></input>
+          <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-1/4 cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>
+            <label className=' text-3xl font-monlam cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>རིགས།</label>
+            <p className=' font-monlam text-3xl ml-8'>{typeSelected}</p>
+          </div>
+          <div>
+            {typeOpen ? <DropDown options={typeOption} setSelect={setTypeSelected} setOpen={setTypeOpen} /> : ''}
           </div>
           <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-2/4'>
             <label className=' text-3xl font-monlam'>མིང་།</label>

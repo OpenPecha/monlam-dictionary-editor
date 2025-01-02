@@ -25,7 +25,7 @@ const Itemlist = () => {
       <div className=' space-y-2 '>
       {[...dummyList,...dummyList,...dummyList,...dummyList].map((data) => (
         <div key={data.id} className=' border-b border-secondary-500 p-2' >
-          <div className='flex items-center justify-between'>{data.itemName}
+          <div className='flex items-center justify-between cursor-pointer'>{data.itemName}
             {data.states=="pending"?<StatusPending/>:<StatusReviewed/>}
           </div>
         </div>
