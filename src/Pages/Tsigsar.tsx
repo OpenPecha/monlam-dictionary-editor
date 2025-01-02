@@ -41,11 +41,11 @@ const Tsigsar = () => {
     <>
       <div className=' ml-16 mt-16'>
         <img src={logo} className=' w-16 rounded-md'></img>
-        <p className=' text-4xl font-semibold'>སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག</p>
+        <p className=' text-4xl font-monlam'>སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག</p>
         <div className=' flex space-x-2 mt-6 bg-slate-300 p-2 rounded-md w-28 h-8'>
           <img src={home} className=' w-4 h-4 cursor-pointer' onClick={() => goTo('home')}></img>
           <img src={arrow} className=' w-2 h-5'></img>
-          <p className=' font-semibold'>ཚིག་གསར།</p>
+          <p className=' font-monlam'>ཚིག་གསར།</p>
         </div>
 
         <div className=' mt-6'>
@@ -54,19 +54,19 @@ const Tsigsar = () => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
 
-          <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-1/3'>
-            <label className=' text-2xl'>མ་ཚིག</label>
-            <input className=' ml-4 outline-none mt-2 text-2xl w-96' {...register('matsig')}></input>
+          <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-2/4'>
+            <label className=' text-3xl font-monlam'>མ་ཚིག</label>
+            <input className=' ml-4 outline-none mt-2 text-2xl w-3/4' {...register('matsig')}></input>
           </div>
 
           <div className=' flex mt-6'>
-              <p className=' text-2xl'>མ་ཚིག་གསར་པ།</p>
+              <p className=' text-3xl font-monlam'>མ་ཚིག་གསར་པ།</p>
               <Toggle register={register} value='newMatsig' />
 
-              <p className=' text-2xl ml-12'>རྒྱུན་སྤྱོད།</p>
+              <p className=' text-3xl ml-12 font-monlam'>རྒྱུན་སྤྱོད།</p>
               <Toggle register={register} value='gyunchoe'/>
 
-              <div className=' text-2xl ml-12'>འབྱུང་ཁུངས།</div>
+              <div className=' text-3xl ml-12 font-monlam'>འབྱུང་ཁུངས།</div>
           </div>
 
           <button className=' flex justify-center mt-8 w-28 rounded-md h-8 bg-gray-200 pb-5 gap-4 font-semibold transition-all duration-150 hover:opacity-80'>འགྲེལ་བཤད། <img src={plus} className=' w-4 mt-2'/></button>
