@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../assets/logo.png'
 import home from '../assets/home.png'
 import arrow from '../assets/arrow.png'
 import { useNavigate } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import DropDown from '../Components/Dropdown/DropDown'
 
 interface Input {
   tsigjang: string,
@@ -16,6 +17,11 @@ interface Input {
 const Pecha = () => {
 
   const navigate = useNavigate();
+
+  const [optionOpen, setOptionOpen] = useState<boolean>(false);
+  const [optionSelected, setOptionSelected] = useState<string>('');
+  const [option, setOption] = useState<string[]>(['གདམ་ཀ 1', 'གདམ་ཀ ༢', 'གདམ་ཀ ༣']);
+
   function goTo(location: string) {
     if (location === 'home') {
       navigate('/');
@@ -73,27 +79,30 @@ const Pecha = () => {
               <input className=' ml-4 outline-none mt-2 text-2xl w-48' {...register('partunMethod')}></input>
             </div>
           </div>
-          <div className='flex w-2/4'>
-            <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-3/4'>
+          <div className='flex w-3/4'>
+            <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-72'>
               <label className=' text-3xl w-32 font-monlam'>རྩོམ་སྒྲིག་པ་མིང་།</label>
               <input className=' ml-4 outline-none mt-2 text-2xl w-28' {...register('author')}></input>
             </div>
-            <div className=' flex items-center border-b-2 border-black mt-3 ml-2 pb-2'>
-              <label className=' text-3xl w-36 font-monlam'>དཔར་ཁང་།</label>
+            <div className=' flex items-center border-b-2 border-black mt-3 ml-2 pb-2 w-72'>
+              <label className=' text-3xl w-20 font-monlam'>དཔར་ཁང་།</label>
               <input className='ml-4 outline-none mt-2 text-2xl w-28' {...register('partunMethod')}></input>
             </div>
-            <div className=' flex items-center border-b-2 border-black mt-3 ml-2 pb-2'>
-              <label className=' text-3xl w-40 font-monlam'>དཔར་སྐྲུན་བྱེད་སྟངས།</label>
-              <input className=' ml-4 outline-none mt-2 text-2xl w-28' {...register('partunMethod')}></input>
+            <div className=' flex items-center border-b-2 border-black mt-3 ml-2 pb-2 w-60 cursor-pointer' onClick={() => setOptionOpen((pre) => !pre)}>
+              <div>
+                <label className=' text-3xl w-40 font-monlam cursor-pointer'>གཏེར་སྟོན་མིང་།</label>
+                {optionOpen ? <DropDown options={option} setSelect={setOptionSelected} setOpen={setOptionOpen} /> : ''}
+              </div>
+              <p className=' ml-7 text-2xl'>{optionSelected}</p>
             </div>
           </div>
           <div className='flex w-2/4'>
             <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-72'>
-              <label className=' text-3xl w-26 font-monlam'>རྩོམ་སྒྲིག་པ་མིང་།</label>
+              <label className=' text-3xl w-26 font-monlam'>རྩོམ་པ་པོ་མིང་།</label>
               <input className=' ml-5 outline-none mt-2 text-2xl w-32' {...register('author')}></input>
             </div>
             <div className=' flex items-center border-b-2 border-black mt-3 ml-2 pb-2'>
-              <label className=' text-3xl w-20 font-monlam'>དཔར་ཁང་།</label>
+              <label className=' text-3xl w-24 font-monlam'>ལོ་ཙཱ་བ་མིང་།</label>
               <input className='ml-2 outline-none mt-2 text-2xl w-28' {...register('partunMethod')}></input>
             </div>
           </div>

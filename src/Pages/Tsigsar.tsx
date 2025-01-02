@@ -20,7 +20,7 @@ const Tsigsar = () => {
   const navigate = useNavigate();
 
   const [sourceOpen, setSourceOpen] = useState<boolean>(false);
-  const [sourceSeleced, setSourceSelected] = useState<string>('');
+  const [sourceSelected, setSourceSelected] = useState<string>('');
   const [sourceOption, setSourceOption] = useState<string[]>(['གདམ་ཀ ༡', 'གདམ་ཀ ༢', 'གདམ་ཀ ༣']);
   
   function goTo(location: string) {
@@ -85,8 +85,10 @@ const Tsigsar = () => {
               </div>
             </div>
               <div>
-                <div className=' relative text-lg ml-12 font-monlam cursor-pointer border-b-2 border-black pb-2 w-52 flex justify-between' onClick={toggleSource}><p>འབྱུང་ཁུངས།</p>{sourceSeleced}</div>
-                {sourceOpen ? <DropDown options={sourceOption} setSelect={setSourceSelected} setOpen={setSourceOpen} /> : ''}
+                <div className=' relative text-lg ml-12 font-monlam cursor-pointer border-b-2 border-black pb-2 w-40 flex justify-between' onClick={toggleSource}><p>འབྱུང་ཁུངས།</p>{sourceSelected}</div>
+                <div className=' ml-11'>
+                  {sourceOpen ? <DropDown options={sourceOption} setSelect={setSourceSelected} setOpen={setSourceOpen} /> : ''}
+                </div>
               </div>
           </div>
 
