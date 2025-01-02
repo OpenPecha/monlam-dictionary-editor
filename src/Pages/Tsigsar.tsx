@@ -6,7 +6,7 @@ import StatusPending from '../Components/StatusPending'
 import StatusReviewed from '../Components/StatusReviewed'
 import plus from '../assets/plus.png'
 import Toggle from '../Components/Toggle'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 interface Input {
   matsig: string,
