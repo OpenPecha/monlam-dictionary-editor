@@ -1,13 +1,10 @@
 import React from 'react'
-import pendingStatus from '../assets/pendingStatus.png'
-
 const StatusPending = () => {
   return (
-    <>
-        <div className=' bg-blue-200 w-32 h-8 flex justify-center items-center rounded-3xl border-2 border-blue-600'>
-            <img src={pendingStatus} className=' w-5 mr-2'/>Pending
-        </div>
-    </>
+    <div className='flex items-center w-28 font-semibold space-x-4 justify-between text-xs bg-secondary-100 text-secondary-900 px-4 py-1 rounded-full'>
+      <div className=' rounded-full w-4 h-4 border-4 border-secondary-200 bg-secondary-600'/>
+      <p className=' mt-1'>Pending</p>
+    </div>
   )
 }
 
