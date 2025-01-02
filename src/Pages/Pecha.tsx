@@ -6,7 +6,11 @@ import { useNavigate } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 interface Input {
-
+  tsigjang: string,
+  tsenja: string,
+  year: string,
+  author: string,
+  partunMethod: string,
 }
 
 const Pecha = () => {
@@ -36,24 +40,62 @@ const Pecha = () => {
     <>
       <div className=' ml-16 mt-16'>
         <img src={logo} className=' w-16 rounded-md'></img>
-        <p className=' text-4xl font-semibold'>སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག</p>
+        <p className=' text-4xl font-monlam'>སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག</p>
         <div className=' flex space-x-2 mt-6 bg-slate-300 p-2 rounded-md w-28 h-8'>
           <img src={home} className=' w-4 h-4 cursor-pointer' onClick={() => goTo('home')}></img>
           <img src={arrow} className=' w-2 h-5'></img>
-          <p className=' font-semibold'>དཔེ་ཆ།</p>
+          <p className=' font-monlam'>དཔེ་ཆ།</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
 
           <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-1/3'>
-            <label className=' text-2xl'>མཚན་བྱང་།</label>
-            <input className=' ml-4 outline-none mt-2 text-2xl w-96' {...register('matsig')}></input>
+            <label className=' text-3xl font-monlam w-2/4'>མཚན་བྱང་།</label>
+            <input className=' ml-4 outline-none mt-2 text-2xl w-96' {...register('tsigjang')}></input>
           </div>
-          <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-1/3'>
-            <label className=' text-2xl'>མཚན་བྱང་བསྡུས་པ།</label>
-            <input className=' ml-4 outline-none mt-2 text-2xl w-96' {...register('matsig')}></input>
-            <label className=' text-2xl'>པར་སྐྲུན་ལོ།</label>
-            <input className=' ml-4 outline-none mt-2 text-2xl w-96' {...register('matsig')}></input>
+          <div className='flex w-2/4'>
+            <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-3/4'>
+              <label className=' text-3xl w-36 font-monlam'>མཚན་བྱང་བསྡུས་པ།</label>
+              <input className=' ml-4 outline-none mt-2 text-2xl w-64' {...register('tsenja')}></input>
+            </div>
+            <div className=' flex items-center border-b-2 border-black mt-3 ml-2 pb-2'>
+              <label className=' text-3xl w-36 font-monlam'>པར་སྐྲུན་ལོ།</label>
+              <input placeholder='DD/MM/YYYY' className=' placeholder:text-sm ml-4 outline-none mt-2 text-2xl w-48' {...register('year')}></input>
+            </div>
+          </div>
+          <div className='flex w-2/4'>
+            <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-3/4'>
+              <label className=' text-3xl w-36 font-monlam'>རྩོམ་སྒྲིག་གི་རྣམ་པ།</label>
+              <input className=' ml-4 outline-none mt-2 text-2xl w-64' {...register('author')}></input>
+            </div>
+            <div className=' flex items-center border-b-2 border-black mt-3 ml-2 pb-2'>
+              <label className=' text-3xl w-40 font-monlam'>དཔར་སྐྲུན་བྱེད་སྟངས།</label>
+              <input className=' ml-4 outline-none mt-2 text-2xl w-48' {...register('partunMethod')}></input>
+            </div>
+          </div>
+          <div className='flex w-2/4'>
+            <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-3/4'>
+              <label className=' text-3xl w-32 font-monlam'>རྩོམ་སྒྲིག་པ་མིང་།</label>
+              <input className=' ml-4 outline-none mt-2 text-2xl w-28' {...register('author')}></input>
+            </div>
+            <div className=' flex items-center border-b-2 border-black mt-3 ml-2 pb-2'>
+              <label className=' text-3xl w-36 font-monlam'>དཔར་ཁང་།</label>
+              <input className='ml-4 outline-none mt-2 text-2xl w-28' {...register('partunMethod')}></input>
+            </div>
+            <div className=' flex items-center border-b-2 border-black mt-3 ml-2 pb-2'>
+              <label className=' text-3xl w-40 font-monlam'>དཔར་སྐྲུན་བྱེད་སྟངས།</label>
+              <input className=' ml-4 outline-none mt-2 text-2xl w-28' {...register('partunMethod')}></input>
+            </div>
+          </div>
+          <div className='flex w-2/4'>
+            <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-72'>
+              <label className=' text-3xl w-26 font-monlam'>རྩོམ་སྒྲིག་པ་མིང་།</label>
+              <input className=' ml-5 outline-none mt-2 text-2xl w-32' {...register('author')}></input>
+            </div>
+            <div className=' flex items-center border-b-2 border-black mt-3 ml-2 pb-2'>
+              <label className=' text-3xl w-20 font-monlam'>དཔར་ཁང་།</label>
+              <input className='ml-2 outline-none mt-2 text-2xl w-28' {...register('partunMethod')}></input>
+            </div>
           </div>
 
         
