@@ -91,6 +91,10 @@ export default {
           secondary: "#E0E0E0",
           tertiary: "#B3B3B3",
         },
+      
+      },
+      fontFamily: {
+        monlam: ["Monlam", "sans-serif"],
       },
     },
   },

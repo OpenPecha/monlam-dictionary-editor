@@ -8,7 +8,7 @@ import Tsigsar from "./Pages/Tsigsar"
 function App() {
 
   return (
-    <>
+    <div className=" w-full">
       <Routes>
         <Route path='/' element={
           <>
@@ -36,7 +36,7 @@ function App() {
           </>
         } />
       </Routes>
-    </>
+    </div>
   )
 }
 
