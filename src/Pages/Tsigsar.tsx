@@ -7,6 +7,8 @@ import StatusReviewed from '../Components/StatusReviewed'
 import plus from '../assets/plus.png'
 import Toggle from '../Components/Toggle'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import DropDown from '../Components/Dropdown/DropDown'
+import { useState } from 'react'
 
 interface Input {
   matsig: string,
@@ -16,6 +18,10 @@ interface Input {
 
 const Tsigsar = () => {
   const navigate = useNavigate();
+
+  const [sourceOpen, setSourceOpen] = useState<boolean>(false);
+  const [sourceSeleced, setSourceSelected] = useState<string>('');
+  const [sourceOption, setSourceOption] = useState<string[]>(['གདམ་ཀ ༡', 'གདམ་ཀ ༢', 'གདམ་ཀ ༣']);
   
   function goTo(location: string) {
     if (location === 'home') {
@@ -23,6 +29,10 @@ const Tsigsar = () => {
     } else {
       console.log('error while going back home page');
     }
+  }
+
+  function toggleSource() {
+    setSourceOpen((pre) => !pre);
   }
 
   const {
@@ -66,7 +76,10 @@ const Tsigsar = () => {
               <p className=' text-3xl ml-12 font-monlam'>རྒྱུན་སྤྱོད།</p>
               <Toggle register={register} value='gyunchoe'/>
 
-              <div className=' text-3xl ml-12 font-monlam'>འབྱུང་ཁུངས།</div>
+              <div>
+                <div className=' text-3xl ml-12 font-monlam cursor-pointer border-b-2 border-black pb-2 w-52 flex justify-between' onClick={toggleSource}><p>འབྱུང་ཁུངས།</p>{sourceSeleced}</div>
+                {sourceOpen ? <DropDown options={sourceOption} setSelect={setSourceSelected} setOpen={setSourceOpen} /> : ''}
+              </div>
           </div>
 
           <button className=' flex justify-center mt-8 w-28 rounded-md h-8 bg-gray-200 pb-5 gap-4 font-semibold transition-all duration-150 hover:opacity-80'>འགྲེལ་བཤད། <img src={plus} className=' w-4 mt-2'/></button>
