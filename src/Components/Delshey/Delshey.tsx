@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import DropDown from '../Dropdown/DropDown';
+import Chen from './Chen';
 
 interface Props {
     popup: boolean[]
@@ -7,6 +8,9 @@ interface Props {
 }
 
 const Delshey: React.FC<Props> = ( {popup, setPopup} ) => {
+
+    const [newChen, setNewChen] = useState<boolean>(false);
+
   return (
     <>
         <div className=' fixed inset-0 flex items-center justify-center bg-grey-800 bg-opacity-50 z-50'>
@@ -36,7 +40,13 @@ const Delshey: React.FC<Props> = ( {popup, setPopup} ) => {
                     </div>
                     <div className=' flex items-center mt-3 ml-4 pb-2 w-[230px]'>
                         <label className=' text-1xl font-monlam w-30'>པར་རིས་དགོས།</label>
-                        <p className=' ml-8'>Toggle</p>
+                        <div className=" ml-10 mt-0 flex items-center justify-center">
+                            <label className="relative inline-block w-12 h-6 cursor-pointer">
+                            <input type="checkbox" className="sr-only peer" />
+                            <span className="block w-full h-full bg-gray-300 rounded-full peer-checked:bg-blue-500"></span>
+                            <span className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition peer-checked:translate-x-6"></span>
+                            </label>
+                        </div>
                     </div>
                     <div className=' flex items-center border-b-2 border-black mt-3 ml-4 pb-2 w-[210px]'>
                         <label className=' text-1xl font-monlam w-22'>མིང་གི་རྣམ་གྲངས།</label>
@@ -46,14 +56,16 @@ const Delshey: React.FC<Props> = ( {popup, setPopup} ) => {
                 <div className=' flex'>
                     <div className=' flex items-center border-b-2 border-black mt-4 pb-2 w-[700px]'>
                         <label className=' text-1xl font-monlam w-12'>མཆན།</label>
-                        <p className=' ml-5'>Extra selection</p>
+                        <p className=' ml-5 cursor-pointer' onClick={() => setNewChen(true)}>Extra selection</p>
                     </div>
                     <div className=' flex items-center border-b-2 border-black mt-3 ml-4 pb-2 w-[460px]'>
                         <label className=' text-1xl font-monlam w-30'>པར་རིས་དགོས།</label>
                         <p className=' ml-8'>Dropdown</p>
                     </div>
                 </div>
+                {newChen ? <Chen /> : ''}
             </div>
+            <button className=' fixed bottom-[100px] right-[180px] bg-slate-400 pl-7 pr-7 pt-2 pb-2 rounded-md hover:opacity-80 active:opacity-50 font-monlam'>ཉར་ཚགས།</button>
         </div>
     </>
   )
