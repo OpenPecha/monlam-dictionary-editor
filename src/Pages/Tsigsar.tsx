@@ -9,6 +9,7 @@ import Toggle from '../Components/Toggle'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import DropDown from '../Components/Dropdown/DropDown'
 import { useState } from 'react'
+import Delshey from '../Components/Delshey/Delshey'
 
 interface Input {
   matsig: string,
@@ -22,7 +23,9 @@ const Tsigsar = () => {
   const [sourceOpen, setSourceOpen] = useState<boolean>(false);
   const [sourceSelected, setSourceSelected] = useState<string>('');
   const [sourceOption, setSourceOption] = useState<string[]>(['གདམ་ཀ ༡', 'གདམ་ཀ ༢', 'གདམ་ཀ ༣']);
-  
+  const [popup, setPopup] = useState<boolean[]>([false,false,false]);
+
+
   function goTo(location: string) {
     if (location === 'home') {
       navigate('/');
@@ -91,8 +94,8 @@ const Tsigsar = () => {
                 </div>
               </div>
           </div>
-
-          <button className=' flex justify-center mt-8 w-28 rounded-md h-8 bg-gray-200 pb-5 gap-4 font-semibold transition-all duration-150 hover:opacity-80'>འགྲེལ་བཤད། <img src={plus} className=' w-4 mt-2'/></button>
+          {popup[0] ? <Delshey popup={popup} setPopup={setPopup} /> : ''}
+          <button className=' flex justify-center mt-8 w-28 rounded-md h-8 bg-gray-200 pb-5 gap-4 font-semibold transition-all duration-150 hover:opacity-80' onClick={() => setPopup(() => [true,false,false])}>འགྲེལ་བཤད། <img src={plus} className=' w-4 mt-2'/></button>
 
           <button type='submit' className=' fixed bottom-14 right-20 bg-slate-400 pl-10 pr-10 pt-1 pb-1 rounded-md hover:opacity-80 active:opacity-50'>Submit</button>
         </form>
