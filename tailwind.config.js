@@ -95,6 +95,7 @@ export default {
       },
       fontFamily: {
         monlam: ["Monlam", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
       },
     },
   },

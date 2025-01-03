@@ -1,9 +1,9 @@
 import React from 'react'
 const StatusReviewed = () => {
   return (
-    <div className='flex w-28 items-center font-semibold space-x-4 justify-between text-xs bg-success-200 text-success-700 px-4 py-1 rounded-full'>
-      <div className=' rounded-full w-4 h-4 border-4 border-success-300 bg-success-600'/>
-      <p className=' mt-1'>Reviewed</p>
+    <div className='flex w-28 font-inter items-center font-semibold space-x-2 justify-center text-xs bg-success-200 text-success-700 px-4 py-1.5 rounded-full'>
+      <div className='flex-shrink-0 rounded-full w-3 h-3 border-2 border-success-300 bg-success-600'/>
+      <p>Reviewed</p>
     </div>
   )
 }

@@ -10,31 +10,11 @@ function App() {
   return (
     <div className=" w-full">
       <Routes>
-        <Route path='/' element={
-          <>
-            <Home/>
-          </>
-        } />
-        <Route path='/Mina' element={
-          <>
-            <Mina />
-          </>
-        } />
-        <Route path='/Parkhang' element={
-          <>
-            <Parkhang />
-          </>
-        } />
-        <Route path='/Pecha' element={
-          <>
-            <Pecha />
-          </>
-        } />
-        <Route path='/Tsigsar' element={
-          <>
-            <Tsigsar />
-          </>
-        } />
+        <Route path='/' element={<Home/>} />
+        <Route path='/Mina' element={<Mina />} />
+        <Route path='/Parkhang' element={<Parkhang />} />
+        <Route path='/Pecha' element={<Pecha />} />
+        <Route path='/Tsigsar' element={<Tsigsar />} />
       </Routes>
     </div>
   )
