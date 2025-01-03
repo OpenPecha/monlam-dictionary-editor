@@ -12,3 +12,4 @@ export interface SearchbarProps {
 export interface ItemlistProps {
   searchQuery: string;
 }
+

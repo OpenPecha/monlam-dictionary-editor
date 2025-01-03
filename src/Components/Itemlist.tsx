@@ -1,10 +1,8 @@
 import React from 'react';
 import StatusPending from './StatusPending';
 import StatusReviewed from './StatusReviewed';
+import { ItemlistProps } from '../types/type';
 
-interface ItemlistProps {
-  searchQuery: string;
-}
 
 const Itemlist: React.FC<ItemlistProps> = ({ searchQuery }) => {
   const dummyList = [
