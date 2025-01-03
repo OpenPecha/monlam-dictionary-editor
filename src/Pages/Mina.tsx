@@ -55,7 +55,7 @@ const Mina = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-1/4 cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>
             <label className=' text-lg font-monlam cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>རིགས།</label>
-            <p className=' font-monlam text-3xl ml-8'>{typeSelected}</p>
+            <p className=' font-monlam text-1xl ml-8'>{typeSelected}</p>
           </div>
           <div>
             {typeOpen ? <DropDown options={typeOption} setSelect={setTypeSelected} setOpen={setTypeOpen} /> : ''}
