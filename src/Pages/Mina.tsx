@@ -45,7 +45,7 @@ const Mina = () => {
     <>
       <div className=' ml-16 mt-16'>
         <img src={logo} className=' w-16 rounded-md'></img>
-        <p className=' text-4xl font-monlam'>སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག</p>
+        <p className=' text-xl font-monlam'>སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག</p>
         <div className=' flex space-x-2 mt-6 bg-slate-300 p-2 rounded-md w-28 h-8'>
           <img src={home} className=' w-4 h-4 cursor-pointer' onClick={() => goTo('home')}></img>
           <img src={arrow} className=' w-2 h-5'></img>
@@ -54,26 +54,26 @@ const Mina = () => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-1/4 cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>
-            <label className=' text-3xl font-monlam cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>རིགས།</label>
+            <label className=' text-lg font-monlam cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>རིགས།</label>
             <p className=' font-monlam text-3xl ml-8'>{typeSelected}</p>
           </div>
           <div>
             {typeOpen ? <DropDown options={typeOption} setSelect={setTypeSelected} setOpen={setTypeOpen} /> : ''}
           </div>
           <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-2/4'>
-            <label className=' text-3xl font-monlam'>མིང་།</label>
+            <label className=' text-lg font-monlam'>མིང་།</label>
             <input className=' ml-14 outline-none mt-2 text-2xl w-96' {...register('name', { required: true })}></input>
           </div>
           <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-1/4'>
-            <label className=' text-3xl font-monlam'>སྐྱེས་ལོ།</label>
+            <label className=' text-lg font-monlam'>སྐྱེས་ལོ།</label>
             <input placeholder='DD/MM/YYYY' className=' ml-11 outline-none mt-2 text-1xl' {...register('birthDate', {required: true})}></input>
           </div>
           <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-1/4'>
-            <label className=' text-3xl font-monlam w-2/4'>འདས་ལོ།</label>
+            <label className=' text-lg font-monlam w-2/4'>འདས་ལོ།</label>
             <input placeholder='DD/MM/YYYY' className=' ml-8 outline-none mt-2 text-1xl w-96' {...register('deathDate', {required: true})}></input>
           </div>
           <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-2/4'>
-            <label className=' text-3xl font-monlam'>མི་རིགས།</label>
+            <label className=' text-lg font-monlam'>མི་རིགས།</label>
             <input className=' ml-8 outline-none mt-2 text-2xl w-96' {...register('race', { required: true })}></input>
           </div>
           <button type='submit' className=' fixed bottom-14 right-20 bg-slate-400 pl-10 pr-10 pt-1 pb-1 rounded-md hover:opacity-80 active:opacity-50'>Submit</button>

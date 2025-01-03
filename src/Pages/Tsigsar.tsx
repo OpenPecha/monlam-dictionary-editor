@@ -88,7 +88,7 @@ const Tsigsar = () => {
               </div>
             </div>
               <div>
-                <div className=' relative text-lg ml-12 font-monlam cursor-pointer border-b-2 border-black pb-2 w-40 flex justify-between' onClick={toggleSource}><p>འབྱུང་ཁུངས།</p>{sourceSelected}</div>
+                <div className=' relative text-lg ml-12 font-monlam cursor-pointer border-b-2 border-black pb-2 w-52 flex justify-between' onClick={toggleSource}><p>འབྱུང་ཁུངས།</p>{sourceSelected}</div>
                 <div className=' ml-11'>
                   {sourceOpen ? <DropDown options={sourceOption} setSelect={setSourceSelected} setOpen={setSourceOpen} /> : ''}
                 </div>
