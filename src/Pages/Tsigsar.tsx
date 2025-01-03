@@ -49,7 +49,7 @@ const Tsigsar = () => {
     console.log(data);
     reset();
   }
-
+  
   return (
     <>
       <div className=' ml-16 mt-16'>
