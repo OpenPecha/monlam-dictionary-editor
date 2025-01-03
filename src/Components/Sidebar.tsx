@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { IoHomeOutline } from "react-icons/io5";
 import { RiArrowRightSLine } from "react-icons/ri";
-import sidebarimage from '/images/sidebarimage.png';
+import sidebarimage from "/images/sidebarimage.png";
 import { FaPlus } from "react-icons/fa6";
 import Searchbar from "./Searchbar";
 import AddItem from "./AddItem";
@@ -10,6 +10,7 @@ import Itemlist from "./Itemlist";
 
 const Sidebar = () => {
   const [show, setShow] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <div className="flex bg-gradient-to-b text-secondary-100 from-[#052250] to-[#0B4DB6] w-fit font-monlam rounded-r-md">
@@ -18,7 +19,7 @@ const Sidebar = () => {
           {!show && (
             <RiArrowRightSLine
               className="h-5 w-5 transition-transform duration-300 cursor-pointer"
-              onClick={() => setShow(prev => !prev)}
+              onClick={() => setShow((prev) => !prev)}
             />
           )}
         </div>
@@ -38,30 +39,39 @@ const Sidebar = () => {
 
       <div
         className={`flex-1 rounded-r-md h-screen transition-all duration-300 ${
-          show ? 'w-[300px]' : 'w-0'
+          show ? "w-[300px]" : "w-0"
         }`}
       >
         <div
           className={`h-full flex flex-col transition-opacity duration-200 ${
-            show ? 'opacity-100' : 'opacity-0'
-          } ${!show ? 'invisible' : ''}`}
+            show ? "opacity-100" : "opacity-0"
+          } ${!show ? "invisible" : ""}`}
         >
           <div className="flex justify-between items-center border-[#5290F4] border-b p-2 h-14">
-            <p className="font-monlam whitespace-nowrap">སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ།</p>
+            <p className="font-monlam whitespace-nowrap">
+              སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ།
+            </p>
             <RiArrowRightSLine
               className={`h-5 w-5 transition-transform duration-300 cursor-pointer ${
-                show ? 'rotate-180' : ''
+                show ? "rotate-180" : ""
               }`}
-              onClick={() => setShow(prev => !prev)}
+              onClick={() => setShow((prev) => !prev)}
             />
           </div>
           <div className="flex-1 p-4 overflow-auto">
-            <Searchbar />
+            <Searchbar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
             <AddItem />
-            <Itemlist />
+            <Itemlist searchQuery={searchQuery} />
           </div>
           <div className="h-[100px] w-full">
-            <img src={sidebarimage} alt="logo" className="w-full h-full object-contain" />
+            <img
+              src={sidebarimage}
+              alt="logo"
+              className="w-full h-full object-contain"
+            />
           </div>
         </div>
       </div>
