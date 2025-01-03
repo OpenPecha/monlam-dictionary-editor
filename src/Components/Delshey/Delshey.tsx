@@ -14,15 +14,15 @@ const Delshey: React.FC<Props> = ( {popup, setPopup} ) => {
   return (
     <>
         <div className=' fixed inset-0 flex items-center justify-center bg-grey-800 bg-opacity-50 z-50'>
-            <div className=' bg-white border-black border-2 p-6 rounded-lg w-10/12 h-5/6'>
+            <div className=' bg-white border-black border-2 p-6 rounded-xl w-10/12 h-5/6'>
                 <div className=' flex justify-between'>
-                    <p className=' font-monlam'>འགྲེལ་བཤད།</p>
+                    <p className=' font-monlam text-2xl font-bold'>འགྲེལ་བཤད།</p>
                     <button onClick={() => setPopup([false,false,false])}>X</button>
                 </div>
                 <div className=' flex'>
                     <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-[700px]'>
                         <label className=' text-1xl font-monlam w-16'>འགྲེལ་བ།</label>
-                        <input className=' ml-3 outline-none mt-2 text-2xl w-[510px]'></input>
+                        <input className=' ml-3 outline-none mt-0 text-2xl w-[510px]'></input>
                     </div>
                     <div className=' flex items-center border-b-2 border-black mt-3 ml-4 pb-2 w-[230px]'>
                         <label className=' text-1xl font-monlam w-22'>འགྲེལ་བ།</label>
