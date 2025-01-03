@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @font-face {
+    font-family: "Inter";
+    src: url("/font/intermed.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
     font-family: "Monlam";
     src: url("/font/MonlamTBslim.woff2") format("woff2"),
         url("/font/MonlamTBslim.woff") format("woff"),

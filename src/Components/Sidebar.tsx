@@ -7,13 +7,14 @@ import { FaPlus } from "react-icons/fa6";
 import Searchbar from "./Searchbar";
 import AddItem from "./AddItem";
 import Itemlist from "./Itemlist";
+import { useNavigate } from 'react-router-dom'
 
 const Sidebar = () => {
   const [show, setShow] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-
+ const navigate = useNavigate()
   return (
-    <div className="flex bg-gradient-to-b text-secondary-100 from-[#052250] to-[#0B4DB6] w-fit font-monlam rounded-r-md">
+    <div className="flex bg-gradient-to-b text-secondary-100 from-[#052250] to-[#0B4DB6] w-fit font-monlam ">
       <div className="h-screen w-14 border-r border-[#5290F4]">
         <div className="h-14 w-full items-center justify-center flex">
           {!show && (
@@ -25,9 +26,9 @@ const Sidebar = () => {
         </div>
         <div className="border-t flex flex-col h-[calc(100vh-theme(space.14))] items-center justify-between p-4 border-t-[#5290F4] w-full">
           <div className="space-y-6">
-            <IoIosSearch className="h-5 w-5 cursor-pointer" />
-            <IoHomeOutline className="h-5 w-5 cursor-pointer" />
-            <FaPlus className="h-5 w-5 cursor-pointer" />
+            <IoIosSearch className="h-5 w-5 cursor-pointer"  onClick={() => setShow(true)} />
+            <IoHomeOutline className="h-5 w-5 cursor-pointer" onClick={()=>navigate("/")}  />
+            <FaPlus className="h-5 w-5 cursor-pointer" onClick={()=>navigate("/Tsigsar")} />
           </div>
           <div>
             <p className="font-monlam text-xs [writing-mode:vertical-rl] rotate-180">
