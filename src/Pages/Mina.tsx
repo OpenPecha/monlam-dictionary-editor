@@ -30,9 +30,9 @@ const Mina = () => {
        <Breadcrumb name="མི་སྣ།"/>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className='flex items-center border-b-2 border-black mt-9 pb-2 w-1/4 cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>
-            <label className='cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>རིགས།</label>
-            <p className='ml-8'>{typeSelected}</p>
+          <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-1/4 cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>
+            <label className=' text-lg font-monlam cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>རིགས།</label>
+            <p className=' font-monlam text-3xl ml-8'>{typeSelected}</p>
           </div>
           <div>
             {typeOpen ? <DropDown options={dummysource} setSelect={setTypeSelected} setOpen={setTypeOpen} /> : ''}

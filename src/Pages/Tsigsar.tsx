@@ -32,7 +32,7 @@ const Tsigsar = () => {
   const onSubmit: SubmitHandler<InputTsigsar> = (data) => {
     console.log(data);
     reset();
-  };
+  }
 
   return (
     <>

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import DropDown from '../Dropdown/DropDown';
 import Chen from './Chen';
+import PechaPopup from './PechaPopup';
+import AuthorPopup from './AuthorPopup';
 
 interface Props {
     popup: boolean[]
@@ -10,6 +12,26 @@ interface Props {
 const Delshey: React.FC<Props> = ( {popup, setPopup} ) => {
 
     const [newChen, setNewChen] = useState<boolean>(false);
+    const [pechaPopup, setPechaPopup] = useState<boolean>(false);
+    const [authorPopup, setAuthorPopup] = useState<boolean>(false);
+
+    // NOTE : The Drop down number is repective from left to right and from top to bottom
+
+    const [dropDown1, setDropDown1] = useState<boolean>(false);
+    const [dropDownOption1, setDropDownOption1] = useState<string[]>(['NOUN', 'VERB', 'PRONOUN']);
+    const [dropDownSelected1, setDropDownSelected1] = useState<string>('');
+    
+    const [dropDown2, setDropDown2] = useState<boolean>(false);
+    const [dropDownOption2, setDropDownOption2] = useState<string[]>(['DUMMY', 'DUMMY', 'DUMMY']);
+    const [dropDownSelected2, setDropDownSelected2] = useState<string>('');
+    
+    const [dropDown3, setDropDown3] = useState<boolean>(false);
+    const [dropDownOption3, setDropDownOption3] = useState<string[]>(['DUMMY', 'DUMMY', 'DUMMY']);
+    const [dropDownSelected3, setDropDownSelected3] = useState<string>('');
+    
+    const [dropDown4, setDropDown4] = useState<boolean>(false);
+    const [dropDownOption4, setDropDownOption4] = useState<string[]>(['RELIGIOUS', 'TEXTBOOK', 'SCIENCE']);
+    const [dropDownSelected4, setDropDownSelected4] = useState<string>('');
 
   return (
     <>
@@ -20,17 +42,19 @@ const Delshey: React.FC<Props> = ( {popup, setPopup} ) => {
                     <button onClick={() => setPopup([false,false,false])}>X</button>
                 </div>
                 <div className=' flex'>
-                    <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-[700px]'>
+                    <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-[660px]'>
                         <label className=' text-1xl font-monlam w-16'>འགྲེལ་བ།</label>
                         <input className=' ml-3 outline-none mt-0 text-2xl w-[510px]'></input>
                     </div>
-                    <div className=' flex items-center border-b-2 border-black mt-3 ml-4 pb-2 w-[230px]'>
-                        <label className=' text-1xl font-monlam w-22'>འགྲེལ་བ།</label>
-                        <p className=' ml-[75px]'>Dropdown</p>
+                    <div className=' flex items-center border-b-2 border-black mt-3 ml-4 pb-2 w-[260px]'>
+                        <label className=' text-1xl font-monlam w-64 cursor-pointer' onClick={() => setDropDown1(pre => !pre)}>བརྡ་སྤྲོད་དབྱེ་བའི་སྡེ་ཚན།</label>
+                        {dropDown1 ? <div className=' absolute z-50 mt-10'><DropDown options={dropDownOption1} setSelect={setDropDownSelected1} setOpen={setDropDown1} /> </div> : ''}
+                        <p className=' ml-[2px]'>{dropDownSelected1}</p>
                     </div>
                     <div className=' flex items-center border-b-2 border-black mt-3 ml-4 pb-2 w-[210px]'>
-                        <label className=' text-1xl font-monlam w-22'>སྤྱོད་སྒོ།</label>
-                        <p className=' ml-[75px]'>Dropdown</p>
+                        <label className=' text-1xl font-monlam w-64 cursor-pointer' onClick={() => setDropDown2(pre => !pre)}>སྤྱོད་སྒོ།</label>
+                        {dropDown2 ? <div className=' absolute z-50 mt-10'><DropDown options={dropDownOption2} setSelect={setDropDownSelected2} setOpen={setDropDown2} /> </div> : ''}
+                        <p className=' ml-[2px]'>{dropDownSelected2}</p>
                     </div>
                 </div>
                 <div className=' flex'>
@@ -49,8 +73,9 @@ const Delshey: React.FC<Props> = ( {popup, setPopup} ) => {
                         </div>
                     </div>
                     <div className=' flex items-center border-b-2 border-black mt-3 ml-4 pb-2 w-[210px]'>
-                        <label className=' text-1xl font-monlam w-22'>མིང་གི་རྣམ་གྲངས།</label>
-                        <p className=' ml-2'>Dropdown</p>
+                        <label className=' text-1xl font-monlam w-64 cursor-pointer' onClick={() => setDropDown3(pre => !pre)}>མིང་གི་རྣམ་གྲངས།</label>
+                        {dropDown3 ? <div className=' absolute z-50 mt-10'><DropDown options={dropDownOption3} setSelect={setDropDownSelected3} setOpen={setDropDown3} /> </div> : ''}
+                        <p className=' ml-[2px]'>{dropDownSelected3}</p>
                     </div>
                 </div>
                 <div className=' flex'>
@@ -59,12 +84,15 @@ const Delshey: React.FC<Props> = ( {popup, setPopup} ) => {
                         <p className=' ml-5 cursor-pointer' onClick={() => setNewChen(true)}>Extra selection</p>
                     </div>
                     <div className=' flex items-center border-b-2 border-black mt-3 ml-4 pb-2 w-[460px]'>
-                        <label className=' text-1xl font-monlam w-30'>པར་རིས་དགོས།</label>
-                        <p className=' ml-8'>Dropdown</p>
+                        <label className=' text-1xl font-monlam w-64 cursor-pointer' onClick={() => setDropDown4(pre => !pre)}>བརྡ་ཆད་དབྱེ་བའི་སྡེ་ཚན།</label>
+                        {dropDown4 ? <div className=' absolute z-50 mt-10'><DropDown options={dropDownOption4} setSelect={setDropDownSelected4} setOpen={setDropDown4} /> </div> : ''}
+                        <p className=' ml-[2px]'>{dropDownSelected4}</p>
                     </div>
                 </div>
                 {newChen ? <Chen /> : ''}
             </div>
+            {pechaPopup ? <PechaPopup /> : ''}
+            {authorPopup ? <AuthorPopup /> : ''}
             <button className=' fixed bottom-[100px] right-[180px] bg-slate-400 pl-7 pr-7 pt-2 pb-2 rounded-md hover:opacity-80 active:opacity-50 font-monlam'>ཉར་ཚགས།</button>
         </div>
     </>
