@@ -1,19 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 interface ChildProps {
-    options: string[];
-    setSelect: React.Dispatch<React.SetStateAction<string>>;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  options: string[];
+  setSelect: React.Dispatch<React.SetStateAction<string>>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DropDown: React.FC<ChildProps> = ( {options, setSelect, setOpen} ) => {
+const DropDown: React.FC<ChildProps> = ({ options, setSelect, setOpen }) => {
   return (
-    <div className=' absolute mt-2 border rounded-md w-56 overflow-y-auto h-32 bg-white'>
-        {options.map((item,index) => (
-            <div className=' flex items-center mt-1 hover:bg-slate-200 p-2 h-8 cursor-pointer text-2xl' onClick={() => {setSelect(item); setOpen((pre) => !pre)}}>{item}</div>
-        ))}
+    <div className=" absolute mt-2 border w-56 overflow-y-scroll bg-white border-black">
+      {options.map((item, index) => (
+        <div
+          key={index}
+          className=" flex items-center border-b border-black font-monlam p-2 hover:bg-slate-100 cursor-pointer text-sm"
+          onClick={() => {
+            setSelect(item);
+            setOpen((pre) => !pre);
+          }}
+        >
+          {item}
+        </div>
+      ))}
     </div>
-  )
-}
+  );
+};
 
-export default DropDown
+export default DropDown;

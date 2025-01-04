@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { IoIosSearch } from "react-icons/io";
-import { IoHomeOutline } from "react-icons/io5";
-import { RiArrowRightSLine } from "react-icons/ri";
+import { IoIosSearch, IoHomeOutline, FaPlus,RiArrowRightSLine } from "../utils/Icons";
 import sidebarimage from "/images/sidebarimage.png";
-import { FaPlus } from "react-icons/fa6";
 import Searchbar from "./Searchbar";
 import AddItem from "./AddItem";
 import Itemlist from "./Itemlist";
