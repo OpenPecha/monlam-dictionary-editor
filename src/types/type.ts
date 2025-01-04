@@ -13,3 +13,29 @@ export interface ItemlistProps {
   searchQuery: string;
 }
 
+export interface InputPecha {
+  tsigjang: string,
+  tsenja: string,
+  year: string,
+  author: string,
+  partunMethod: string,
+}
+
+export interface InputParchang {
+  name: string,
+  chakyul: string
+}
+
+export interface InputMina {
+  type: string,
+  name: string,
+  birthDate: string,
+  deathDate: string,
+  race: string,
+}
+
+export interface InputTsigsar {
+  matsig: string;
+  newMatsig: boolean;
+  gyunchoe: boolean;
+}
