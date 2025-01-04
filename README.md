@@ -4,7 +4,7 @@
   <br>
 </h1>
 
-<h3 align="center">{Project name}</h3>
+<h3 align="center">Monlam Grand Dictionary Editor</h3>
 
 ## Table of Contents
 
@@ -33,13 +33,13 @@ Before you begin, ensure you have the following prerequisites installed and conf
 1. Clone the repository:
 
    ```bash
-   git clone {git repo link}
+   git clone git@github.com:OpenPecha/monlam-dictionary-editor.git
    ```
 
 2. Change into the project directory:
 
    ```bash
-   cd {project name}
+   cd monlamgrandeditor
    ```
 
 3. Install the dependencies:
