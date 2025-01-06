@@ -1,56 +1,57 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { FaPlus } from '../utils/Icons'
-import { AutoSuggestInputProps } from '../types/type'
-
-
+import React, { useState, useEffect, useRef } from "react";
+import { FaPlus } from "../utils/Icons";
+import { AutoSuggestInputProps } from "../types/type";
 
 const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
   label,
   register,
   registerName,
-  className = '',
-  options = [] 
+  className = "",
+  options = [],
 }) => {
-  const [inputValue, setInputValue] = useState<string>('')
-  const [suggestions, setSuggestions] = useState<string[]>([])
-  const [showSuggestions, setShowSuggestions] = useState<boolean>(false)
-  const suggestionsRef = useRef<HTMLDivElement>(null)
+  const [inputValue, setInputValue] = useState<string>("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target as Node)) {
-        setShowSuggestions(false)
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target as Node)
+      ) {
+        setShowSuggestions(false);
       }
-    }
+    };
 
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setInputValue(value)
+    const value = e.target.value;
+    setInputValue(value);
 
     if (value.trim()) {
-      const filtered = options.filter(name =>
-        name.toLowerCase().includes(value.toLowerCase())
-      )
-      setSuggestions(filtered)
-      setShowSuggestions(true)
+      const filtered = options.filter((name) =>
+        name.toLowerCase().includes(value.toLowerCase()),
+      );
+      setSuggestions(filtered);
+      setShowSuggestions(true);
     } else {
-      setSuggestions([])
-      setShowSuggestions(false)
+      setSuggestions([]);
+      setShowSuggestions(false);
     }
-  }
+  };
 
   const handleSuggestionClick = (suggestion: string) => {
-    setInputValue(suggestion)
-    setShowSuggestions(false)
-  }
+    setInputValue(suggestion);
+    setShowSuggestions(false);
+  };
 
   return (
     <div className={`relative ${className}`}>
-      <div className="flex items-center border-b-2 border-black pb-2 w-fit">
+      <div className="flex items-center border-b border-black pb-2 w-fit">
         <label>{label}</label>
         <input
           {...register(registerName)}
@@ -60,9 +61,9 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
           autoComplete="off"
         />
       </div>
-      
+
       {showSuggestions && inputValue.trim() && (
-        <div 
+        <div
           ref={suggestionsRef}
           className="absolute z-10 mt-1 font-monlam text-sm w-64 bg-white border border-black shadow flex flex-col"
         >
@@ -84,12 +85,13 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
             )}
           </div>
           <div className="flex items-center border-t border-black justify-between p-2 bg-white">
-            <p>སྣོན་པ། </p><FaPlus className="cursor-pointer"/>
+            <p>སྣོན་པ། </p>
+            <FaPlus className="cursor-pointer" />
           </div>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default AutoSuggestInput
+export default AutoSuggestInput;

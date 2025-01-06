@@ -55,7 +55,7 @@ const Parkhang = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-9 space-y-4">
         <div className=" flex items-center ">
-          <div className="flex items-center border-b-2 border-black pb-2 w-fit">
+          <div className="flex items-center border-b border-black pb-2 w-fit">
             <label htmlFor="name">མིང་།</label>
             <input
               id="name"
@@ -73,7 +73,7 @@ const Parkhang = () => {
         </div>
 
         <div className="flex items-center">
-          <div className="flex items-center border-b-2 border-black pb-2 w-fit">
+          <div className="flex items-center border-b border-black pb-2 w-fit">
             <label htmlFor="chakyul">ཆགས་ཡུལ།</label>
             <input
               id="chakyul"
