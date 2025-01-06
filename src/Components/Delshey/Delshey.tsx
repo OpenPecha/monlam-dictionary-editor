@@ -16,12 +16,11 @@ const Delshey = ({ onClose }: DelsheyProps) => {
 
   return (
     <div
-      className="fixed z-40 inset-0 bg-black/50 flex items-start justify-center overflow-hidden"
+      className="font-monlam fixed z-40 inset-0 bg-black/50 flex items-start justify-center overflow-hidden"
       onClick={handleBackdropClick}
     >
       <div className="bg-white relative w-full max-w-4xl mx-4 my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="p-8">
-          {/* Header */}
           <div className="flex justify-between items-center border-b border-gray-200 py-4 sticky top-0 bg-white">
             <h2 className="text-xl font-monlam">འགྲེལ་བཤད།</h2>
             <button
@@ -32,20 +31,16 @@ const Delshey = ({ onClose }: DelsheyProps) => {
             </button>
           </div>
 
-          {/* Form Content */}
           <form className="mt-6 space-y-6">
-            {/* First Row - Required Fields */}
             <div className="space-y-4">
               <div className="flex items-center">
-                <label className="text-red-500 mr-1">*</label>
-                <label className="w-24">འགྲེལ་པ།</label>
+                <label className="w-24">འགྲེལ་བ།</label>
                 <input
                   className="flex-1 border-b border-black outline-none"
                   {...register("explanation", { required: true })}
                 />
               </div>
               <div className="flex items-center">
-                <label className="text-red-500 mr-1">*</label>
                 <label className="w-24">དཔེར་བརྗོད་ཚིག་གྲུབ།</label>
                 <input
                   className="flex-1 border-b border-black outline-none"
@@ -54,8 +49,36 @@ const Delshey = ({ onClose }: DelsheyProps) => {
               </div>
             </div>
 
-            {/* Second Row - Toggle and Dropdowns */}
-            <div className="flex space-x-8 items-center">
+            <div className="flex space-x-4">
+              <div className="flex-1 flex items-center space-x-2">
+                <label className=" shrink-0">བརྡ་སྤྲོད་དབྱེ་བའི་སྡེ་ཚན།</label>
+                <select
+                  className="w-full border-b border-black outline-none pb-2"
+                  {...register("dropdown1")}
+                >
+                  <option value="">སྡེ་ཚན།</option>
+                </select>
+              </div>
+              <div className="flex-1 flex items-center space-x-2">
+                <label className=" shrink-0">སྤྱོད་སྒོ།</label>
+                <select
+                  className="w-full border-b border-black outline-none pb-2"
+                  {...register("dropdown2")}
+                >
+                  <option value="">སྤྱོད་སྒོ།</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex space-x-4">
+              <div className="flex-1">
+                <select
+                  className="w-full border-b border-black outline-none pb-2"
+                  {...register("dropdown3")}
+                >
+                  <option value="">བརྡ་ཆད་དབྱེ་བའི་སྡེ་ཚན།</option>
+                </select>
+              </div>
               <div className="flex items-center space-x-4">
                 <span className="text-gray-700">པར་རིས་དགོས།</span>
                 <label className="relative inline-block w-12 h-6 cursor-pointer">
@@ -68,27 +91,12 @@ const Delshey = ({ onClose }: DelsheyProps) => {
                   <span className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-300 ease-in-out peer-checked:translate-x-6" />
                 </label>
               </div>
-              <div className="flex-1">
-                <select
-                  className="w-full border-b border-black outline-none pb-2"
-                  {...register("dropdown1")}
-                >
-                  <option value="">བརྡ་སྤྲོད་དབྱེ་བའི་སྡེ་ཚན།</option>
-                </select>
-              </div>
-              <div className="flex-1">
-                <select
-                  className="w-full border-b border-black outline-none pb-2"
-                  {...register("dropdown2")}
-                >
-                  <option value="">སྤྱོད་སྒོ།</option>
-                </select>
-              </div>
             </div>
 
             {/* Third Row - Tabs and Content */}
             <div>
-              <div className="flex space-x-2">
+              <div className="flex items-center space-x-2">
+                <p className=" text-xl font-bold">མཆན།</p>
                 <button className="border rounded-lg px-4 py-1">མཆན། ༡</button>
                 <button className="border rounded-lg px-4 py-1">མཆན། ༢</button>
                 <button className="border rounded-lg px-4 py-1 flex items-center">
