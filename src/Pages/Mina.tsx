@@ -1,61 +1,180 @@
-import React, { useState } from 'react'
-import logo from '../assets/logo.png'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import logo from '../assets/logo.png'
 import DropDown from '../Components/Dropdown/DropDown'
 import Breadcrumb from '../Components/Breadcrumb'
 import Submits from '../Components/Submit'
+import SuccessMessage from '../Components/SuccessMessage'
 import { InputMina } from '../types/type'
 
+
 const dummysource = ["གདམ་ཀ་དང་པོ།", "གདམ་ཀ་གཉིས་པ།", "གདམ་ཀ་གསུམ་པ།"];
-const Mina = () => {
-  const [typeOpen, setTypeOpen] = useState<boolean>(false);
-  const [typeSelected, setTypeSelected] = useState<string>('');
+
+const Mina: React.FC = () => {
+  const navigate = useNavigate()
+  const [showSuccess, setShowSuccess] = useState<boolean>(false)
+  const [typeOpen, setTypeOpen] = useState<boolean>(false)
+  const [typeSelected, setTypeSelected] = useState<string>('')
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: {errors},
+    formState: { errors, isSubmitting }
   } = useForm<InputMina>()
 
-  const onSubmit: SubmitHandler<InputMina> = (data) => {
-    console.log(data);
-    reset();
+  useEffect(() => {
+    let navigationTimer:any
+    
+    if (showSuccess) {
+      navigationTimer = setTimeout(() => {
+        navigate('/')
+      }, 3000)
+    }
+    
+    return () => {
+      if (navigationTimer) {
+        clearTimeout(navigationTimer)
+      }
+    }
+  }, [showSuccess, navigate])
+
+  const onSubmit: SubmitHandler<InputMina> = async (data) => {
+    try {
+      const formData = {
+        ...data,
+        type: typeSelected
+      }
+      
+      console.log(formData)
+      reset()
+      setShowSuccess(true)
+      
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setShowSuccess(false)
+    }
   }
 
   return (
-      <div className=' text-lg font-monlam ml-16 mt-16'>
-      <img src={logo} className='w-16 rounded-md'/>
-      <p className=' text-xl font-semibold mt-2'>སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག</p>
-       <Breadcrumb name="མི་སྣ།"/>
+    <div className="font-monlam p-16">
+      <img 
+        src={logo} 
+        alt="Logo"
+        className="w-16 rounded-md"
+      />
+      <p className="text-xl font-semibold mt-2">
+        སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག
+      </p>
+      
+      <Breadcrumb name="མི་སྣ།"/>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className=' flex items-center border-b-2 border-black mt-9 pb-2 w-1/4 cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>
-            <label className=' text-lg font-monlam cursor-pointer' onClick={() => setTypeOpen((pre) => !pre)}>རིགས།</label>
-            <p className=' font-monlam text-3xl ml-8'>{typeSelected}</p>
+      <form 
+        onSubmit={handleSubmit(onSubmit)}
+        className="mt-9 space-y-4"
+      >
+        <div className="space-y-1">
+          <div 
+            className="flex items-center border-b-2 border-black pb-2 w-1/4 cursor-pointer" 
+            onClick={() => setTypeOpen((prev) => !prev)}
+          >
+            <label>རིགས།</label>
+            <p className="ml-8">{typeSelected}</p>
           </div>
-          <div>
-            {typeOpen ? <DropDown options={dummysource} setSelect={setTypeSelected} setOpen={setTypeOpen} /> : ''}
+          {typeOpen && (
+            <DropDown 
+              options={dummysource} 
+              setSelect={setTypeSelected} 
+              setOpen={setTypeOpen} 
+            />
+          )}
+          {!typeSelected && (
+            <span className="text-red-500 font-inter text-sm">
+              *Type selection is required
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center">
+          <div className="flex items-center border-b-2 border-black pb-2 w-fit">
+            <label htmlFor="name">མིང་།</label>
+            <input 
+              id="name"
+              className="ml-2 outline-none w-64"
+              {...register('name', { 
+                required: 'Name is required' 
+              })}
+            />
           </div>
-          <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-fit'>
-            <label>མིང་།</label>
-            <input className=' ml-2 outline-none mt-2 ' {...register('name', { required: true })}></input>
+          {errors.name && (
+            <span className="text-red-500 font-inter text-sm ml-2">
+              *{errors.name.message}
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center">
+          <div className="flex items-center justify-between border-b-2 border-black pb-2 w-64">
+            <label htmlFor="birthDate">སྐྱེས་ལོ།</label>
+            <input 
+              id="birthDate"
+              type="date"
+              className="outline-none font-inter text-sm"
+              {...register('birthDate', { 
+                required: 'Birth date is required' 
+              })}
+            />
           </div>
-          <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-fit'>
-            <label>སྐྱེས་ལོ།</label>
-            <input type='date' className=' ml-11 outline-none mt-2 ' {...register('birthDate', {required: true})}></input>
+          {errors.birthDate && (
+            <span className="text-red-500 font-inter text-sm ml-2">
+              *{errors.birthDate.message}
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center">
+          <div className="flex items-center justify-between border-b-2 border-black pb-2 w-64">
+            <label htmlFor="deathDate">འདས་ལོ།</label>
+            <input 
+              id="deathDate"
+              type="date"
+              className="outline-none font-inter text-sm"
+              {...register('deathDate', { 
+                required: 'Death date is required' 
+              })}
+            />
           </div>
-          <div className=' flex items-center border-b-2 border-black mt-3 pb-2  w-fit'>
-            <label>འདས་ལོ།</label>
-            <input type='date'  className=' ml-8 outline-none mt-2 ' {...register('deathDate', {required: true})}></input>
+          {errors.deathDate && (
+            <span className="text-red-500 font-inter text-sm ml-2">
+              *{errors.deathDate.message}
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center">
+          <div className="flex items-center border-b-2 border-black pb-2 w-fit">
+            <label htmlFor="race">མི་རིགས།</label>
+            <input 
+              id="race"
+              className="ml-2 outline-none w-64"
+              {...register('race', { 
+                required: 'Race is required' 
+              })}
+            />
           </div>
-          <div className=' flex items-center border-b-2 border-black mt-3 pb-2 w-fit'>
-            <label>མི་རིགས།</label>
-            <input className=' ml-8 outline-none mt-2 ' {...register('race', { required: true })}></input>
-          </div>
-          <Submits/>
-        </form>
-      </div>
+          {errors.race && (
+            <span className="text-red-500 font-inter text-sm ml-2">
+              *{errors.race.message}
+            </span>
+          )}
+        </div>
+
+        <Submits disabled={isSubmitting || !typeSelected} />
+      </form>
+
+      {showSuccess && <SuccessMessage />}
+    </div>
   )
 }
 

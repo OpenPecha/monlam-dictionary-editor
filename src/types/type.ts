@@ -19,6 +19,7 @@ export interface InputPecha {
   year: string,
   author: string,
   partunMethod: string,
+  terton:string
 }
 
 export interface InputParchang {
@@ -43,4 +44,12 @@ export interface InputTsigsar {
 export interface Props {
     popup: boolean[]
     setPopup: React.Dispatch<React.SetStateAction<boolean[]>>;
+}
+
+export interface AutoSuggestInputProps {
+  label: string;
+  register: any;
+  registerName: string;
+  className?: string;
+  options?: string[];
 }
