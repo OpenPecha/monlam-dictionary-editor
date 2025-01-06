@@ -35,7 +35,7 @@ const Tsigsar = () => {
 
   return (
     <>
-      <div className=" text-lg font-monlam ml-16 mt-16">
+      <div className=" text-lg font-monlam sm:ml-16 ml-2 mt-4">
         <img src={logo} className=" w-16 rounded-md"/>
         <p className=" text-xl font-semibold mt-2 ">
           སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག
@@ -45,16 +45,17 @@ const Tsigsar = () => {
           <StatusPending />
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className=" flex items-center border-b-2 border-black mt-4 pb-2 w-fit">
-            <label>མ་ཚིག</label>
+        <form onSubmit={handleSubmit(onSubmit)} className=" w-fit">
+          <div className=" flex w-full items-center border-b-2 border-black mt-4 pb-2">
+            <label className="flex-shrink-0 w-fit">མ་ཚིག</label>
             <input
-              className=" ml-4 outline-none mt-2 "
+             className="ml-2 outline-none flex-grow" 
               {...register("matsig")}
             ></input>
           </div>
 
-          <div className=" flex mt-4">
+          <div className=" flex max-sm:flex-col mt-4">
+            <div className=" flex mr-16">
             <div className=" flex items-center">
               <p>མ་ཚིག་གསར་པ།</p>
               <div className="mb-2">
@@ -68,9 +69,11 @@ const Tsigsar = () => {
                 <Toggle register={register} value="gyunchoe" />
               </div>
             </div>
+            </div>
+           
             <div>
               <div
-                className=" mt-2 relative ml-12 gap-x-2  cursor-pointer border-b-2 border-black pb-2 w-fit flex justify-between"
+                className=" mt-2 relative gap-x-2  cursor-pointer border-b-2 border-black pb-2 w-72 flex justify-between"
                 onClick={toggleSource}
               >
                 <p>འབྱུང་ཁུངས།</p>
