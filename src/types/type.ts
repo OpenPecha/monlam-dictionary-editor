@@ -19,7 +19,8 @@ export interface InputPecha {
   year: string,
   author: string,
   partunMethod: string,
-  terton:string
+  terton:string,
+  bdrclink:string
 }
 
 export interface InputParchang {
@@ -52,4 +53,9 @@ export interface AutoSuggestInputProps {
   registerName: string;
   className?: string;
   options?: string[];
+}
+
+export interface SubmitsProps {
+  disabled?: boolean;
+  className?: string;
 }

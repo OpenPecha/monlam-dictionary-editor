@@ -48,7 +48,7 @@ const Parkhang = () => {
   }
 
   return (
-      <div className="font-monlam p-16">
+      <div className="font-monlam sm:p-16 p-4 ">
         <img 
           src={logo} 
           alt="Logo" 
@@ -101,7 +101,7 @@ const Parkhang = () => {
               </span>
             )}
           </div>
-          <Submits disabled={isSubmitting} />
+          <Submits />
         </form>
         {showSuccess && <SuccessMessage />}
       </div>

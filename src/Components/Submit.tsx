@@ -1,9 +1,7 @@
 import React from 'react'
+import { SubmitsProps } from '../types/type'
 
-interface SubmitsProps {
-  disabled?: boolean;
-  className?: string;
-}
+
 
 const Submits: React.FC<SubmitsProps> = ({ 
   disabled = false,
@@ -15,15 +13,15 @@ const Submits: React.FC<SubmitsProps> = ({
       disabled={disabled}
       className={`
         fixed 
-        bottom-14 
-        right-20 
+        bottom-8
+        right-0
         text-base 
         font-inter 
-        bg-gray-400 
-        text-white 
-        px-6 
-        py-1 
-        rounded-md 
+       bg-secondary-400
+         text-secondary-50
+         py-4
+         px-8
+        rounded-l-md 
         transition-opacity
         hover:opacity-80 
         active:opacity-50

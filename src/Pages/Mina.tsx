@@ -58,7 +58,7 @@ const Mina: React.FC = () => {
   }
 
   return (
-    <div className="font-monlam p-16">
+    <div className="font-monlam sm:p-16 p-4 mt-4">
       <img 
         src={logo} 
         alt="Logo"
@@ -75,6 +75,7 @@ const Mina: React.FC = () => {
         className="mt-9 space-y-4"
       >
         <div className="space-y-1">
+          <div className='flex items-center'>
           <div 
             className="flex items-center border-b-2 border-black pb-2 w-1/4 cursor-pointer" 
             onClick={() => setTypeOpen((prev) => !prev)}
@@ -82,6 +83,15 @@ const Mina: React.FC = () => {
             <label>རིགས།</label>
             <p className="ml-8">{typeSelected}</p>
           </div>
+          <div>
+          {!typeSelected && (
+            <span className="text-red-500 font-inter text-sm">
+              *Type selection is required
+            </span>
+          )}
+          </div>
+          </div>
+          
           {typeOpen && (
             <DropDown 
               options={dummysource} 
@@ -89,13 +99,8 @@ const Mina: React.FC = () => {
               setOpen={setTypeOpen} 
             />
           )}
-          {!typeSelected && (
-            <span className="text-red-500 font-inter text-sm">
-              *Type selection is required
-            </span>
-          )}
         </div>
-
+        
         <div className="flex items-center">
           <div className="flex items-center border-b-2 border-black pb-2 w-fit">
             <label htmlFor="name">མིང་།</label>
@@ -170,7 +175,7 @@ const Mina: React.FC = () => {
           )}
         </div>
 
-        <Submits disabled={isSubmitting || !typeSelected} />
+        <Submits />
       </form>
 
       {showSuccess && <SuccessMessage />}

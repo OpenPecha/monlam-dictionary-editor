@@ -28,8 +28,8 @@ const pathlist = [
 const Home = () => {
   const navigate = useNavigate();
   return (
-      <div>
-        <Usercard />
+      <div className="flex flex-col items-center justify-center h-screen"> 
+        {/* <Usercard /> */}
         <div className="flex items-center justify-center mt-8 mb-2">
           <img className=" w-16 h-16 rounded-md" src={logo} alt="Logo" />
         </div>
