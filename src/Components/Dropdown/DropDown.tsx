@@ -8,7 +8,7 @@ interface ChildProps {
 
 const DropDown: React.FC<ChildProps> = ({ options, setSelect, setOpen }) => {
   return (
-    <div className=" absolute mt-2 border w-56 overflow-y-scroll bg-white border-black">
+    <div className=" z-20 absolute mt-2 border w-56 overflow-y-scroll bg-white border-black">
       {options.map((item, index) => (
         <div
           key={index}
