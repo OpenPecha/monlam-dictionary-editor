@@ -45,7 +45,7 @@ const Parkhang = () => {
   };
 
   return (
-    <div className="font-monlam sm:p-12 p-4 ">
+    <div className="font-monlam sm:px-12 p-4 ">
       <img src={logo} alt="Logo" className="w-16 rounded-md" />
       <p className="text-xl font-semibold mt-2">
         སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག
