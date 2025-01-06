@@ -56,7 +56,7 @@ const Pecha = () => {
   }
 
   return (
-    <div className=" font-monlam text-lg sm:ml-16 ml-4 mt-6">
+    <div className=" font-monlam p-2 text-lg sm:ml-16 ml-4 ">
       <img src={logo} className=" w-16 rounded-md" />
       <p className=" text-xl font-semibold mt-2 ">
         སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག
@@ -74,7 +74,10 @@ const Pecha = () => {
         <div className="flex mt-3 max-sm:flex-col justify-between">
           <div className="flex items-center border-b-2 border-black pb-2 ">
             <label className="flex-shrink-0 w-fit">མཚན་བྱང་བསྡུས་པ།</label>
-            <input className="ml-2 outline-none flex-grow" {...register("tsenja")} />
+            <input
+              className="ml-2 outline-none flex-grow"
+              {...register("tsenja")}
+            />
           </div>
           <div className=" flex items-center border-b-2 border-black mt-3 max-sm:w-fit sm:ml-2 pb-2">
             <label>པར་སྐྲུན་ལོ།</label>
@@ -149,17 +152,20 @@ const Pecha = () => {
             options={DUMMY_TRANSLATORS}
           />
         </div>
-          <AutoSuggestInput
-            label="དཔར་ཁང་།"
-            register={register}
-            registerName="publisher"
-            className="mt-3"
-            options={DUMMY_PUBLISHERS}
+        <AutoSuggestInput
+          label="དཔར་ཁང་།"
+          register={register}
+          registerName="publisher"
+          className="mt-3"
+          options={DUMMY_PUBLISHERS}
+        />
+        <div className="flex font-inter text-sm mt-4 items-center border-b-2 border-black pb-2">
+          <label className="flex-shrink-0 w-fit">BDRC Link</label>
+          <input
+            className="ml-2 outline-none flex-grow"
+            {...register("bdrclink")}
           />
-          <div className="flex font-inter text-sm mt-4 items-center border-b-2 border-black pb-2">
-            <label className="flex-shrink-0 w-fit">BDRC Link</label>
-            <input className="ml-2 outline-none flex-grow" {...register("bdrclink")} />
-          </div>
+        </div>
         <Submits />
       </form>
     </div>
