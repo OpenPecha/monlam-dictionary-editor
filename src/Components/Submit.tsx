@@ -1,14 +1,39 @@
 import React from 'react'
 
-const Submits = () => {
+interface SubmitsProps {
+  disabled?: boolean;
+  className?: string;
+}
+
+const Submits: React.FC<SubmitsProps> = ({ 
+  disabled = false,
+  className = ''
+}) => {
   return (
     <button
-    disabled
-    type="submit"
-    className=" -z-10 fixed bottom-14 text-base right-20 font-inter bg-gray-400 text-white px-6 py-1 rounded-md hover:opacity-80 active:opacity-50"
-  >
-    Submit
-  </button>
+      type="submit"
+      disabled={disabled}
+      className={`
+        fixed 
+        bottom-14 
+        right-20 
+        text-base 
+        font-inter 
+        bg-gray-400 
+        text-white 
+        px-6 
+        py-1 
+        rounded-md 
+        transition-opacity
+        hover:opacity-80 
+        active:opacity-50
+        disabled:opacity-50 
+        disabled:cursor-not-allowed
+        ${className}
+      `}
+    >
+      {disabled ? 'Submitting...' : 'Submit'}
+    </button>
   )
 }
 

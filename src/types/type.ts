@@ -39,3 +39,8 @@ export interface InputTsigsar {
   newMatsig: boolean;
   gyunchoe: boolean;
 }
+
+export interface Props {
+    popup: boolean[]
+    setPopup: React.Dispatch<React.SetStateAction<boolean[]>>;
+}
