@@ -24,14 +24,6 @@ export interface InputPecha {
   bdrclink: string;
 }
 
-export interface InputMina {
-  type: string;
-  name: string;
-  birthDate: string;
-  deathDate: string;
-  race: string;
-}
-
 export interface InputTsigsar {
   matsig: string;
   newMatsig: boolean;
@@ -69,4 +61,19 @@ export const PublisherSchema = z.object({
 });
 export type InputParchang = z.infer<typeof PublisherSchema>;
 
-//
+//mina type  and inference
+export const MinaSchema = z.object({
+  type: z.string().min(1, "རིགས་འདེམས་རོགས།"),
+  name: z
+    .string()
+    .min(3, "མིང་ཡིག་འབྲུ་གསུམ་ཡན་དགོས།")
+    .regex(tibetanRegex, "བོད་ཡིག་ནང་འབྲི་རོགས།"),
+  year_of_birth: z.number().min(1, "སྐྱེས་ལོ་ཨང་ཀི་ནང་འབྲི་རོགས།"),
+  year_of_death: z.number().min(1, "འདས་ལོ་ཨང་ཀི་ནང་འབྲི་རོགས།"),
+  nationality: z
+    .string()
+    .min(2, "མི་རིགས་ཡིག་འབྲུ་གཉིས་ཡན་དགོས།")
+    .regex(tibetanRegex, "བོད་ཡིག་ནང་འབྲི་རོགས།"),
+});
+
+export type InputMina = z.infer<typeof MinaSchema>;

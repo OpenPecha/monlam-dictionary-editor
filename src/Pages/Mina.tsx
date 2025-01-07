@@ -1,56 +1,90 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import logo from "../assets/logo.png";
-import DropDown from "../Components/Dropdown/DropDown";
 import Breadcrumb from "../Components/Breadcrumb";
 import Submits from "../Components/Submit";
 import SuccessMessage from "../Components/SuccessMessage";
-import { InputMina } from "../types/type";
+import { InputMina, MinaSchema } from "../types/type";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 
-const dummysource = ["གདམ་ཀ་དང་པོ།", "གདམ་ཀ་གཉིས་པ།", "གདམ་ཀ་གསུམ་པ།"];
-
+const typeofMinaOptions = [
+  "རྩོམ་སྒྲིག་པ་",
+  "གཏེར་སྟོན་",
+  "ལོ་ཙཱ་བ་",
+  "རྩོམ་པ་པོ་",
+];
 const Mina: React.FC = () => {
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
-  const [typeOpen, setTypeOpen] = useState<boolean>(false);
-  const [typeSelected, setTypeSelected] = useState<string>("");
 
   const {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors, isSubmitting },
-  } = useForm<InputMina>();
+  } = useForm<InputMina>({
+    resolver: zodResolver(MinaSchema),
+  });
 
-  useEffect(() => {
-    let navigationTimer: any;
-
-    if (showSuccess) {
-      navigationTimer = setTimeout(() => {
-        navigate("/");
-      }, 3000);
-    }
-
-    return () => {
-      if (navigationTimer) {
-        clearTimeout(navigationTimer);
-      }
-    };
-  }, [showSuccess, navigate]);
+  const API_KEY = import.meta.env.VITE_API_KEY;
 
   const onSubmit: SubmitHandler<InputMina> = async (data) => {
-    try {
-      const formData = {
-        ...data,
-        type: typeSelected,
-      };
+    const { type, ...dataToSend } = data;
+    const typeMap = {
+      "རྩོམ་སྒྲིག་པ་": "editor",
+      "གཏེར་སྟོན་": "terton",
+      "ལོ་ཙཱ་བ་": "translator",
+      "རྩོམ་པ་པོ་": "author",
+    };
 
-      console.log(formData);
-      reset();
-      setShowSuccess(true);
+    const pathnav = typeMap[type] || "error";
+    console.log(data);
+
+    try {
+      const response = await axios.post(
+        `https://api.monlamdictionary.com/api/grand/book/${pathnav}/create`,
+        dataToSend,
+        {
+          headers: {
+            apikey: API_KEY,
+            accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      if (response.data) {
+        console.log("Success:", response.data);
+        reset();
+        setShowSuccess(true);
+        const timer = setTimeout(() => {
+          setShowSuccess(false);
+          navigate("/");
+        }, 3000);
+        return () => clearTimeout(timer);
+      }
     } catch (error) {
-      console.error("Form submission error:", error);
+      if (axios.isAxiosError(error)) {
+        setError("root", {
+          type: "custom",
+          message: error.response?.data?.detail || "Form submission failed",
+        });
+
+        console.error("API Error:", {
+          status: error.response?.status,
+          data: error.response?.data,
+          message: error.message,
+        });
+      } else {
+        setError("root", {
+          type: "custom",
+          message: "An unexpected error occurred",
+        });
+        console.error("Form submission error:", error);
+      }
       setShowSuccess(false);
     }
   };
@@ -64,47 +98,32 @@ const Mina: React.FC = () => {
 
       <Breadcrumb name="མི་སྣ།" />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-9 space-y-4">
-        <div className="space-y-1">
-          <div className="flex items-center">
-            <div
-              className="flex items-center border-b border-black pb-2 w-1/4 cursor-pointer"
-              onClick={() => setTypeOpen((prev) => !prev)}
-            >
-              <label>རིགས།</label>
-              <p className="ml-8">{typeSelected}</p>
-            </div>
-            <div>
-              {!typeSelected && (
-                <span className="text-red-500 font-inter text-sm">
-                  *Type selection is required
-                </span>
-              )}
-            </div>
-          </div>
-
-          {typeOpen && (
-            <DropDown
-              options={dummysource}
-              setSelect={setTypeSelected}
-              setOpen={setTypeOpen}
-            />
-          )}
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-9 space-y-4 w-fit">
+        <div className=" flex items-center space-x-2">
+          <label className="shrink-0">རིགས།</label>
+          <select
+            className=" w-64 border-b border-black outline-none "
+            {...register("type")}
+          >
+            {typeofMinaOptions.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
         </div>
-
         <div className="flex items-center">
-          <div className="flex items-center border-b border-black pb-2 w-fit">
-            <label htmlFor="name">མིང་།</label>
+          <div className="flex items-center border-b border-black pb-2 w-full">
+            <label>མིང་།</label>
             <input
               id="name"
               className="ml-2 outline-none w-64"
-              {...register("name", {
-                required: "Name is required",
-              })}
+              {...register("name")}
+              disabled={isSubmitting}
             />
           </div>
           {errors.name && (
-            <span className="text-red-500 font-inter text-sm ml-2">
+            <span className="text-red-500 font-monlam text-sm ml-2">
               *{errors.name.message}
             </span>
           )}
@@ -112,19 +131,21 @@ const Mina: React.FC = () => {
 
         <div className="flex items-center">
           <div className="flex items-center justify-between border-b border-black pb-2 w-64">
-            <label htmlFor="birthDate">སྐྱེས་ལོ།</label>
+            <label>སྐྱེས་ལོ།</label>
             <input
-              id="birthDate"
-              type="date"
+              id="birthyear"
+              type="number"
               className="outline-none font-inter text-sm"
-              {...register("birthDate", {
-                required: "Birth date is required",
+              {...register("year_of_birth", {
+                valueAsNumber: true,
+                required: true,
               })}
+              disabled={isSubmitting}
             />
           </div>
-          {errors.birthDate && (
+          {errors.year_of_birth && (
             <span className="text-red-500 font-inter text-sm ml-2">
-              *{errors.birthDate.message}
+              *{errors.year_of_birth.message}
             </span>
           )}
         </div>
@@ -134,41 +155,43 @@ const Mina: React.FC = () => {
             <label htmlFor="deathDate">འདས་ལོ།</label>
             <input
               id="deathDate"
-              type="date"
+              type="number"
               className="outline-none font-inter text-sm"
-              {...register("deathDate", {
-                required: "Death date is required",
-              })}
+              {...register("year_of_death", { valueAsNumber: true })}
+              disabled={isSubmitting}
             />
           </div>
-          {errors.deathDate && (
+          {errors.year_of_death && (
             <span className="text-red-500 font-inter text-sm ml-2">
-              *{errors.deathDate.message}
+              *{errors.year_of_death.message}
             </span>
           )}
         </div>
 
         <div className="flex items-center">
-          <div className="flex items-center border-b border-black pb-2 w-fit">
+          <div className="flex items-center border-b border-black pb-2 w-full">
             <label htmlFor="race">མི་རིགས།</label>
             <input
               id="race"
               className="ml-2 outline-none w-64"
-              {...register("race", {
-                required: "Race is required",
-              })}
+              {...register("nationality")}
+              disabled={isSubmitting}
             />
           </div>
-          {errors.race && (
-            <span className="text-red-500 font-inter text-sm ml-2">
-              *{errors.race.message}
+          {errors.nationality && (
+            <span className="text-red-500 font-monlam text-sm ml-2">
+              *{errors.nationality.message}
             </span>
           )}
         </div>
 
-        <Submits />
+        <Submits disabled={isSubmitting} />
       </form>
-
+      {errors.root && (
+        <div className="bg-red-100 border w-fit right-0 absolute border-red-400 text-red-700 px-4 py-3 rounded-l-md  mt-4">
+          {errors.root.message}
+        </div>
+      )}
       {showSuccess && <SuccessMessage />}
     </div>
   );
