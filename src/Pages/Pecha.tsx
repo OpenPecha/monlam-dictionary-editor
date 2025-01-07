@@ -64,7 +64,7 @@ const Pecha = () => {
       <Breadcrumb name="དཔེ་ཆ།" />
 
       <form onSubmit={handleSubmit(onSubmit)} className=" w-fit mt-9 ">
-        <div className="flex items-center border-b-2 border-black pb-2">
+        <div className="flex items-center border-b border-black pb-2">
           <label className="flex-shrink-0 w-fit">མཚན་བྱང་།</label>
           <input
             className="ml-2 outline-none flex-grow"
@@ -72,14 +72,14 @@ const Pecha = () => {
           />
         </div>
         <div className="flex mt-3 max-sm:flex-col justify-between">
-          <div className="flex items-center border-b-2 border-black pb-2 ">
+          <div className="flex items-center border-b border-black pb-2 ">
             <label className="flex-shrink-0 w-fit">མཚན་བྱང་བསྡུས་པ།</label>
             <input
               className="ml-2 outline-none flex-grow"
               {...register("tsenja")}
             />
           </div>
-          <div className=" flex items-center border-b-2 border-black mt-3 max-sm:w-fit sm:ml-2 pb-2">
+          <div className=" flex items-center border-b border-black mt-3 max-sm:w-fit sm:ml-2 pb-2">
             <label>པར་སྐྲུན་ལོ།</label>
             <input
               type="date"
@@ -89,14 +89,14 @@ const Pecha = () => {
           </div>
         </div>
         <div className="flex mt-3 max-sm:flex-col justify-between">
-          <div className="flex items-center border-b-2 border-black pb-2  w-fit">
+          <div className="flex items-center border-b border-black pb-2  w-fit">
             <label>རྩོམ་སྒྲིག་གི་རྣམ་པ།</label>
             <input className=" ml-4 outline-none " {...register("author")} />
           </div>
 
           <div>
             <div
-              className=" mt-3 w-72 relative sm:ml-2 gap-x-2  cursor-pointer border-b-2 border-black pb-2 flex justify-between"
+              className=" mt-3 w-72 relative sm:ml-2 gap-x-2  cursor-pointer border-b border-black pb-2 flex justify-between"
               onClick={toggleSource}
             >
               <p>དཔར་སྐྲུན་བྱེད་སྟངས།</p>
@@ -159,7 +159,7 @@ const Pecha = () => {
           className="mt-3"
           options={DUMMY_PUBLISHERS}
         />
-        <div className="flex font-inter text-sm mt-4 items-center border-b-2 border-black pb-2">
+        <div className="flex font-inter text-sm mt-4 items-center border-b border-black pb-2">
           <label className="flex-shrink-0 w-fit">BDRC Link</label>
           <input
             className="ml-2 outline-none flex-grow"

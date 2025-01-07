@@ -68,7 +68,7 @@ const Mina: React.FC = () => {
         <div className="space-y-1">
           <div className="flex items-center">
             <div
-              className="flex items-center border-b-2 border-black pb-2 w-1/4 cursor-pointer"
+              className="flex items-center border-b border-black pb-2 w-1/4 cursor-pointer"
               onClick={() => setTypeOpen((prev) => !prev)}
             >
               <label>རིགས།</label>
@@ -93,7 +93,7 @@ const Mina: React.FC = () => {
         </div>
 
         <div className="flex items-center">
-          <div className="flex items-center border-b-2 border-black pb-2 w-fit">
+          <div className="flex items-center border-b border-black pb-2 w-fit">
             <label htmlFor="name">མིང་།</label>
             <input
               id="name"
@@ -111,7 +111,7 @@ const Mina: React.FC = () => {
         </div>
 
         <div className="flex items-center">
-          <div className="flex items-center justify-between border-b-2 border-black pb-2 w-64">
+          <div className="flex items-center justify-between border-b border-black pb-2 w-64">
             <label htmlFor="birthDate">སྐྱེས་ལོ།</label>
             <input
               id="birthDate"
@@ -130,7 +130,7 @@ const Mina: React.FC = () => {
         </div>
 
         <div className="flex items-center">
-          <div className="flex items-center justify-between border-b-2 border-black pb-2 w-64">
+          <div className="flex items-center justify-between border-b border-black pb-2 w-64">
             <label htmlFor="deathDate">འདས་ལོ།</label>
             <input
               id="deathDate"
@@ -149,7 +149,7 @@ const Mina: React.FC = () => {
         </div>
 
         <div className="flex items-center">
-          <div className="flex items-center border-b-2 border-black pb-2 w-fit">
+          <div className="flex items-center border-b border-black pb-2 w-fit">
             <label htmlFor="race">མི་རིགས།</label>
             <input
               id="race"

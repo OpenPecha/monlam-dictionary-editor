@@ -46,7 +46,7 @@ const Tsigsar = () => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className=" w-fit">
-          <div className=" flex w-full items-center border-b-2 border-black mt-4 pb-2">
+          <div className=" flex w-full items-center border-b border-black mt-4 pb-2">
             <label className="flex-shrink-0 w-fit">མ་ཚིག</label>
             <input
               className="ml-2 outline-none flex-grow"
@@ -73,7 +73,7 @@ const Tsigsar = () => {
 
             <div>
               <div
-                className=" mt-2 relative gap-x-2  cursor-pointer border-b-2 border-black pb-2 w-72 flex justify-between"
+                className=" mt-2 relative gap-x-2  cursor-pointer border-b border-black pb-2 w-72 flex justify-between"
                 onClick={toggleSource}
               >
                 <p>འབྱུང་ཁུངས།</p>

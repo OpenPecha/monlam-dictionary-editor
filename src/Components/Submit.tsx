@@ -1,11 +1,9 @@
-import React from 'react'
-import { SubmitsProps } from '../types/type'
+import React from "react";
+import { SubmitsProps } from "../types/type";
 
-
-
-const Submits: React.FC<SubmitsProps> = ({ 
+const Submits: React.FC<SubmitsProps> = ({
   disabled = false,
-  className = ''
+  className = "",
 }) => {
   return (
     <button
@@ -22,17 +20,12 @@ const Submits: React.FC<SubmitsProps> = ({
          py-4
          px-8
         rounded-l-md 
-        transition-opacity
-        hover:opacity-80 
-        active:opacity-50
-        disabled:opacity-50 
-        disabled:cursor-not-allowed
         ${className}
       `}
     >
-      {disabled ? 'Submitting...' : 'Submit'}
+      {disabled ? "Submitting..." : "Submit"}
     </button>
-  )
-}
+  );
+};
 
-export default Submits
+export default Submits;
