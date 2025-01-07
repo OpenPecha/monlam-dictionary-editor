@@ -10,22 +10,22 @@ import { InputParchang, PublisherSchema } from "../types/type";
 import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
+
 const Parkhang = () => {
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
 
   const {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<InputParchang>({
     resolver: zodResolver(PublisherSchema),
   });
 
   const onSubmit: SubmitHandler<InputParchang> = async (data) => {
-    setError("");
     try {
       const response = await axios.post(
         "https://api.monlamdictionary.com/api/grand/book/publisher/create",
@@ -51,16 +51,21 @@ const Parkhang = () => {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const errorMessage =
-          error.response?.data?.detail || "Form submission failed";
-        setError(errorMessage);
+        setError("root", {
+          type: "custom",
+          message: error.response?.data?.detail || "Form submission failed",
+        });
+
         console.error("API Error:", {
           status: error.response?.status,
           data: error.response?.data,
           message: error.message,
         });
       } else {
-        setError("An unexpected error occurred");
+        setError("root", {
+          type: "custom",
+          message: "An unexpected error occurred",
+        });
         console.error("Form submission error:", error);
       }
       setShowSuccess(false);
@@ -75,13 +80,6 @@ const Parkhang = () => {
       </p>
 
       <Breadcrumb name="དཔར་ཁང་།" />
-
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4">
-          {error}
-        </div>
-      )}
-
       <form onSubmit={handleSubmit(onSubmit)} className="mt-9 space-y-4">
         <div className="flex items-center">
           <div className="flex items-center border-b border-black pb-2 w-fit">
@@ -118,6 +116,11 @@ const Parkhang = () => {
         </div>
         <Submits disabled={isSubmitting} />
       </form>
+      {errors.root && (
+        <div className="bg-red-100 border w-fit right-0 absolute border-red-400 text-red-700 px-4 py-3 rounded-l-md  mt-4">
+          {errors.root.message}
+        </div>
+      )}
 
       {showSuccess && <SuccessMessage />}
     </div>
