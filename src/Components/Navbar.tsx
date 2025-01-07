@@ -12,15 +12,17 @@ const Navbar = () => {
   useEffect(() => {
     const createUser = async () => {
       if (isAuthenticated && user) {
+        const userData = {
+          name: user.name,
+          email: user.email,
+          role: "user",
+          picture: user.picture,
+        };
+        console.log(userData);
         try {
-          await axios.post(
+          const response = await axios.post(
             "https://api.monlamdictionary.com/api/user/",
-            {
-              name: user.name,
-              email: user.email,
-              role: "user",
-              picture: user.picture,
-            },
+            userData,
             {
               headers: {
                 apikey: API_KEY,
@@ -29,7 +31,10 @@ const Navbar = () => {
               },
             },
           );
-          console.log("User created successfully");
+          console.log("User created successfully", {
+            sentData: userData,
+            response: response.data,
+          });
         } catch (error) {
           if (axios.isAxiosError(error)) {
             console.error("API Error:", {
