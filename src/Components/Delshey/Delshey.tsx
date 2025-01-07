@@ -45,7 +45,7 @@ interface FormData {
 }
 
 const Delshey = ({ onClose }: DelsheyProps) => {
-  const { register, control, watch } = useForm<FormData>({
+  const { register, control } = useForm<FormData>({
     defaultValues: {
       subForms: [],
     },
@@ -83,9 +83,6 @@ const Delshey = ({ onClose }: DelsheyProps) => {
     });
     setActiveTab(fields.length);
   };
-
-  const formValues = watch();
-
   return (
     <div
       className="font-monlam fixed z-40 inset-0 bg-black/50 flex items-start justify-center overflow-hidden"
