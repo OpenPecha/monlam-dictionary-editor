@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import Breadcrumb from "../Components/Breadcrumb";
 import { InputPecha, PechaSchema } from "../types/type";
 import Submits from "../Components/Submit";
 import AutoSuggestInput from "../Components/Autosuggestion";
+import SuccessMessage from "../Components/SuccessMessage";
 
 interface Publisher {
   id: string;
@@ -43,6 +45,9 @@ const defaultApiState = {
 };
 
 const Pecha = () => {
+  const navigate = useNavigate();
+  const [showSuccess, setShowSuccess] = useState<boolean>(false);
+
   const [publishers, setPublishers] =
     useState<ApiState<Publisher>>(defaultApiState);
   const [editors, setEditors] = useState<ApiState<Person>>(defaultApiState);
@@ -58,7 +63,8 @@ const Pecha = () => {
     handleSubmit,
     reset,
     setValue,
-    formState: { errors },
+    setError,
+    formState: { errors, isSubmitting },
   } = useForm<InputPecha>({
     resolver: zodResolver(PechaSchema),
     defaultValues: {
@@ -112,18 +118,51 @@ const Pecha = () => {
     fetchAllData();
   }, []);
 
-  const onSubmit = async (data: InputPecha) => {
+  const onSubmit: SubmitHandler<InputPecha> = async (data) => {
+    console.log(data);
     try {
-      const response = await axios.post(`${API_BASE_URL}/create`, data, {
-        headers: {
-          apikey: API_KEY,
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        `https://api.monlamdictionary.com/api/grand/metadata/book/create`,
+        data,
+        {
+          headers: {
+            apikey: API_KEY,
+            accept: "application/json",
+            "Content-Type": "application/json",
+          },
         },
-      });
-      console.log("Form submitted successfully:", response.data);
-      reset();
+      );
+
+      if (response.data) {
+        console.log("Success:", response.data);
+        reset();
+        setShowSuccess(true);
+        const timer = setTimeout(() => {
+          setShowSuccess(false);
+          navigate("/");
+        }, 3000);
+        return () => clearTimeout(timer);
+      }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      if (axios.isAxiosError(error)) {
+        setError("root", {
+          type: "custom",
+          message: error.response?.data?.detail || "Form submission failed",
+        });
+
+        console.error("API Error:", {
+          status: error.response?.status,
+          data: error.response?.data,
+          message: error.message,
+        });
+      } else {
+        setError("root", {
+          type: "custom",
+          message: "An unexpected error occurred",
+        });
+        console.error("Form submission error:", error);
+      }
+      setShowSuccess(false);
     }
   };
 
@@ -139,6 +178,7 @@ const Pecha = () => {
           type={type}
           className={`ml-2 outline-none flex-grow ${errors[name] ? "border-red-500" : ""}`}
           {...register(name, { valueAsNumber: type === "number" })}
+          disabled={isSubmitting}
         />
       </div>
       {errors[name] && (
@@ -188,13 +228,13 @@ const Pecha = () => {
   }
 
   return (
-    <div className="font-monlam p-2 text-lg sm:ml-16 ml-4">
+    <div className="font-monlam p-2 text-lg sm:ml-16 ml-4 mb-9">
       <img src={logo} className="w-16 rounded-md" alt="Logo" />
       <p className="text-xl font-semibold mt-2">
         སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག
       </p>
       <Breadcrumb name="དཔེ་ཆ།" />
-      <form onSubmit={handleSubmit(onSubmit)} className="w-fit mt-9">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-fit my-9">
         {renderInputField("མཚན་བྱང་།", "title")}
         <div className="flex mt-3 max-sm:flex-col justify-between gap-4">
           {renderInputField("མཚན་བྱང་བསྡུས་པ།", "shortentitle")}
@@ -208,8 +248,8 @@ const Pecha = () => {
               <select
                 className={`w-64 outline-none ${errors.print_methodId ? "border-red-500" : ""}`}
                 {...register("print_methodId")}
+                disabled={isSubmitting}
               >
-                <option value="">Select print method</option>
                 {printMethods.data.map((method) => (
                   <option className="text-sm" key={method.id} value={method.id}>
                     {method.name}
@@ -233,6 +273,7 @@ const Pecha = () => {
             className="mt-3"
             options={editors.data}
             personType="editor"
+            disabled={isSubmitting}
           />
           <AutoSuggestInput
             label="གཏེར་སྟོན་མིང་།"
@@ -242,6 +283,7 @@ const Pecha = () => {
             className="mt-3"
             options={tertons.data}
             personType="terton"
+            disabled={isSubmitting}
           />
         </div>
         <div className="flex max-sm:flex-col justify-between gap-4">
@@ -253,6 +295,7 @@ const Pecha = () => {
             className="mt-3"
             options={authors.data}
             personType="author"
+            disabled={isSubmitting}
           />
           <AutoSuggestInput
             label="ལོ་ཙཱ་བ་མིང་།"
@@ -262,6 +305,7 @@ const Pecha = () => {
             className="mt-3"
             options={translators.data}
             personType="translator"
+            disabled={isSubmitting}
           />
         </div>
         <AutoSuggestInput
@@ -272,11 +316,13 @@ const Pecha = () => {
           className="mt-3"
           options={publishers.data}
           personType="publisher"
+          disabled={isSubmitting}
         />
         {renderInputField("BDRC Link", "digital_ref")}
         <div className="mt-6">
           <Submits
             disabled={
+              isSubmitting ||
               publishers.loading ||
               editors.loading ||
               authors.loading ||
@@ -287,6 +333,14 @@ const Pecha = () => {
           />
         </div>
       </form>
+
+      {errors.root && (
+        <div className="bg-red-100 border w-fit absolute right-0 bottom-28 border-red-400 text-red-700 px-4 py-3 rounded-l-md mt-4">
+          {errors.root.message}
+        </div>
+      )}
+
+      {showSuccess && <SuccessMessage />}
     </div>
   );
 };
