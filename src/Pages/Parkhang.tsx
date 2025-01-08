@@ -23,6 +23,7 @@ const Parkhang = () => {
     formState: { errors, isSubmitting },
   } = useForm<InputParchang>({
     resolver: zodResolver(PublisherSchema),
+    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<InputParchang> = async (data) => {

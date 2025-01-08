@@ -27,20 +27,25 @@ const Mina: React.FC = () => {
     formState: { errors, isSubmitting },
   } = useForm<InputMina>({
     resolver: zodResolver(MinaSchema),
+    mode: "onChange",
   });
 
   const API_KEY = import.meta.env.VITE_API_KEY;
 
   const onSubmit: SubmitHandler<InputMina> = async (data) => {
     const { type, ...dataToSend } = data;
-    const typeMap = {
+    const typeMap: { [key: string]: string } = {
       "རྩོམ་སྒྲིག་པ་": "editor",
       "གཏེར་སྟོན་": "terton",
       "ལོ་ཙཱ་བ་": "translator",
       "རྩོམ་པ་པོ་": "author",
     };
 
-    const pathnav = typeMap[type] || "error";
+    const pathnav = typeMap[type];
+    if (!pathnav) {
+      setError("type", { type: "manual", message: "Invalid type selected" });
+      return;
+    }
     console.log(data);
 
     try {

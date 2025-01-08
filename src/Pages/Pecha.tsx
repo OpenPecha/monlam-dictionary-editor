@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import logo from "../assets/logo.png";
-import { SubmitHandler, useForm } from "react-hook-form";
-import DropDown from "../Components/Dropdown/DropDown";
 import Breadcrumb from "../Components/Breadcrumb";
-import Submits from "../Components/Submit";
 import { InputPecha } from "../types/type";
+import Submits from "../Components/Submit";
 import AutoSuggestInput from "../Components/Autosuggestion";
 
 const dummysource = ["གདམ་ཀ་དང་པོ།", "གདམ་ཀ་གཉིས་པ།", "གདམ་ཀ་གསུམ་པ།"];
@@ -38,84 +37,73 @@ const DUMMY_TRANSLATORS = [
 ];
 
 const Pecha = () => {
-  const [sourceOpen, setSourceOpen] = useState<boolean>(false);
-  const [sourceSelected, setSourceSelected] = useState<string>("");
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<InputPecha>();
 
-  const onSubmit: SubmitHandler<InputPecha> = (data) => {
+  const onSubmit = (data: InputPecha) => {
     console.log(data);
     reset();
   };
-  function toggleSource() {
-    setSourceOpen((pre) => !pre);
-  }
 
   return (
-    <div className=" font-monlam p-2 text-lg sm:ml-16 ml-4 ">
-      <img src={logo} className=" w-16 rounded-md" />
-      <p className=" text-xl font-semibold mt-2 ">
+    <div className="font-monlam p-2 text-lg sm:ml-16 ml-4">
+      <img src={logo} className="w-16 rounded-md" alt="Logo" />
+      <p className="text-xl font-semibold mt-2">
         སྨོན་ལམ་ཚིག་མཛོད་ཆེན་མོ་རྩོམ་སྒྲིག་མ་ལག
       </p>
       <Breadcrumb name="དཔེ་ཆ།" />
 
-      <form onSubmit={handleSubmit(onSubmit)} className=" w-fit mt-9 ">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-fit mt-9">
         <div className="flex items-center border-b border-black pb-2">
           <label className="flex-shrink-0 w-fit">མཚན་བྱང་།</label>
           <input
             className="ml-2 outline-none flex-grow"
-            {...register("tsigjang")}
+            {...register("title")}
           />
         </div>
+
         <div className="flex mt-3 max-sm:flex-col justify-between">
-          <div className="flex items-center border-b border-black pb-2 ">
+          <div className="flex items-center border-b border-black pb-2">
             <label className="flex-shrink-0 w-fit">མཚན་བྱང་བསྡུས་པ།</label>
             <input
               className="ml-2 outline-none flex-grow"
-              {...register("tsenja")}
+              {...register("shortentitle")}
             />
           </div>
-          <div className=" flex items-center border-b border-black mt-3 max-sm:w-fit sm:ml-2 pb-2">
+          <div className="flex items-center border-b border-black mt-3 max-sm:w-fit sm:ml-2 pb-2">
             <label>པར་སྐྲུན་ལོ།</label>
             <input
-              type="date"
+              type="number"
               className="ml-4 font-inter text-sm outline-none"
-              {...register("year")}
+              {...register("year_of_publish")}
             />
           </div>
         </div>
+
         <div className="flex mt-3 max-sm:flex-col justify-between">
-          <div className="flex items-center border-b border-black pb-2  w-fit">
+          <div className="flex items-center border-b border-black pb-2 w-fit">
             <label>རྩོམ་སྒྲིག་གི་རྣམ་པ།</label>
-            <input className=" ml-4 outline-none " {...register("author")} />
+            <input className="ml-4 outline-none" {...register("collection")} />
           </div>
 
-          <div>
-            <div
-              className=" mt-3 w-72 relative sm:ml-2 gap-x-2  cursor-pointer border-b border-black pb-2 flex justify-between"
-              onClick={toggleSource}
-            >
-              <p>དཔར་སྐྲུན་བྱེད་སྟངས།</p>
-              {sourceSelected && (
-                <span className=" text-sm border flex items-center justify-center rounded-full px-2 border-black">
-                  {sourceSelected}
-                </span>
-              )}
-            </div>
-            <div className=" ml-11">
-              {sourceOpen ? (
-                <DropDown
-                  options={dummysource}
-                  setSelect={setSourceSelected}
-                  setOpen={setSourceOpen}
-                />
-              ) : (
-                ""
-              )}
+          <div className="mt-3 w-72 relative sm:ml-2 gap-x-2 cursor-pointer border-b border-black pb-2 flex justify-between">
+            <div className="flex items-center space-x-2">
+              <label className="shrink-0">དཔར་སྐྲུན་བྱེད་སྟངས།</label>
+              <select
+                className="w-64 outline-none"
+                {...register("print_method")}
+              >
+                {dummysource.map((option, index) => (
+                  <option className="text-sm" key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
@@ -123,42 +111,51 @@ const Pecha = () => {
         <div className="flex max-sm:flex-col justify-between">
           <AutoSuggestInput
             label="རྩོམ་སྒྲིག་པ་མིང་།"
+            name="editor"
             register={register}
-            registerName="author"
+            setValue={setValue}
             className="mt-3"
             options={DUMMY_AUTHORS}
+            personType="editor"
           />
           <AutoSuggestInput
             label="གཏེར་སྟོན་མིང་།"
+            name="terton"
             register={register}
-            registerName="terton"
+            setValue={setValue}
             className="mt-3 sm:ml-2"
             options={DUMMY_TERTONS}
+            personType="terton"
           />
         </div>
-        <div className="flex  max-sm:flex-col justify-between">
+
+        <div className="flex max-sm:flex-col justify-between">
           <AutoSuggestInput
             label="རྩོམ་པ་པོ་མིང་།"
+            name="author"
             register={register}
-            registerName="mainAuthor"
+            setValue={setValue}
             className="mt-3"
             options={DUMMY_AUTHORS}
+            personType="author"
           />
           <AutoSuggestInput
             label="ལོ་ཙཱ་བ་མིང་།"
+            name="translator"
             register={register}
-            registerName="translator"
+            setValue={setValue}
             className="mt-3 sm:ml-2"
             options={DUMMY_TRANSLATORS}
+            personType="translator"
           />
         </div>
-        <AutoSuggestInput
+        {/* <AutoSuggestInput
           label="དཔར་ཁང་།"
           register={register}
           registerName="publisher"
           className="mt-3"
           options={DUMMY_PUBLISHERS}
-        />
+        /> */}
         <div className="flex font-inter text-sm mt-4 items-center border-b border-black pb-2">
           <label className="flex-shrink-0 w-fit">BDRC Link</label>
           <input
