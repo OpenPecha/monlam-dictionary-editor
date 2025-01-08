@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from "react-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { InputPersonModal, PersonModalSchema } from "../types/type";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +9,7 @@ interface PersonModalProps {
   onClose: () => void;
   personType: string;
   title: string;
+  onPersonAdd?: (data: InputPersonModal) => void;
 }
 
 const PersonModal: React.FC<PersonModalProps> = ({
@@ -15,6 +17,7 @@ const PersonModal: React.FC<PersonModalProps> = ({
   onClose,
   personType,
   title,
+  onPersonAdd,
 }) => {
   const {
     register,
@@ -27,24 +30,35 @@ const PersonModal: React.FC<PersonModalProps> = ({
   });
 
   if (!isOpen) return null;
-  const onSubmit1: SubmitHandler<InputPersonModal> = async (data) => {
-    console.log(data);
+
+  const onSubmit: SubmitHandler<InputPersonModal> = async (data) => {
+    try {
+      if (onPersonAdd) {
+        onPersonAdd(data);
+      }
+      reset();
+      onClose();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
-  return (
+  const modalContent = (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-[calc(100vw_-_40rem)] mx-4">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-monlam">{title}</h3>
           <button
-            onClick={onClose}
+            onClick={(e) => {
+              e.preventDefault();
+              onClose();
+            }}
             className="text-gray-500 hover:text-gray-700"
           >
             x
           </button>
         </div>
-
-        <form onSubmit={handleSubmit(onSubmit1)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="flex items-center">
             <div className="flex items-center border-b border-black pb-2 w-96">
               <label>མིང་།</label>
@@ -60,7 +74,6 @@ const PersonModal: React.FC<PersonModalProps> = ({
               </span>
             )}
           </div>
-
           <div className="flex items-center">
             <div className="flex items-center justify-between border-b border-black pb-2 w-64">
               <label>སྐྱེས་ལོ།</label>
@@ -77,7 +90,6 @@ const PersonModal: React.FC<PersonModalProps> = ({
               </span>
             )}
           </div>
-
           <div className="flex items-center">
             <div className="flex items-center justify-between border-b border-black pb-2 w-64">
               <label>འདས་ལོ།</label>
@@ -94,9 +106,8 @@ const PersonModal: React.FC<PersonModalProps> = ({
               </span>
             )}
           </div>
-
           <div className="flex items-center">
-            <div className="flex items-center border-b border-black pb-2  w-96">
+            <div className="flex items-center border-b border-black pb-2 w-96">
               <label>མི་རིགས།</label>
               <input
                 {...register("nationality")}
@@ -110,11 +121,13 @@ const PersonModal: React.FC<PersonModalProps> = ({
               </span>
             )}
           </div>
-
           <div className="flex justify-end space-x-2 mt-6">
             <button
               type="button"
-              onClick={onClose}
+              onClick={(e) => {
+                e.preventDefault();
+                onClose();
+              }}
               className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 font-monlam"
             >
               དོར་བ།
@@ -133,13 +146,15 @@ const PersonModal: React.FC<PersonModalProps> = ({
           </div>
         </form>
         {errors.root && (
-          <div className="bg-red-100 border w-fit right-0 absolute border-red-400 text-red-700 px-4 py-3 rounded-l-md  mt-4">
+          <div className="bg-red-100 border w-fit right-0 absolute border-red-400 text-red-700 px-4 py-3 rounded-l-md mt-4">
             {errors.root.message}
           </div>
         )}
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
 
 export default PersonModal;

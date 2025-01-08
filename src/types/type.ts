@@ -14,15 +14,15 @@ export interface ItemlistProps {
   searchQuery: string;
 }
 
-export interface InputPecha {
-  title: string;
-  shortentitle: string;
-  year_of_publish: string;
-  collection: string;
-  print_method: string;
-  terton: string;
-  bdrclink: string;
-}
+// export interface InputPecha {
+//   title: string;
+//   shortentitle: string;
+//   year_of_publish: string;
+//   collection: string;
+//   print_method: string;
+//   terton: string;
+//   bdrclink: string;
+// }
 
 export interface InputTsigsar {
   matsig: string;
@@ -91,4 +91,31 @@ export const PersonModalSchema = z.object({
     .min(2, "མི་རིགས་ཡིག་འབྲུ་གཉིས་ཡན་དགོས།")
     .regex(tibetanRegex, "བོད་ཡིག་ནང་འབྲི་རོགས།"),
 });
-export type InputPersonModal = z.infer<typeof PersonModalSchema>;
+// export type InputPersonModal = z.infer<typeof PersonModalSchema>;
+// import { z } from "zod";
+
+// Define your Zod schema for the form
+export const PechaSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  shortentitle: z.string().min(1, "Short title is required"),
+  year_of_publish: z.number().min(1, "Publication year is required"),
+  collection: z.string(),
+  print_methodId: z.string(),
+  editorId: z.string(),
+  tertonId: z.string(),
+  authorId: z.string(),
+  translatorId: z.string(),
+  digital_ref: z.string(),
+  publisherId: z.string(),
+});
+
+// Infer the type from the schema
+export type InputPecha = z.infer<typeof PechaSchema>;
+
+// Person Modal Input type
+export type InputPersonModal = {
+  name: string;
+  year_of_birth?: number;
+  year_of_death?: number;
+  nationality?: string;
+};
