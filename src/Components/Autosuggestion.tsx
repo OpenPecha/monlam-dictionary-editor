@@ -3,21 +3,59 @@ import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import PersonModal from "./PersonModal";
 import { FaPlus } from "../utils/Icons";
 
+interface Person {
+  id: string;
+  name: string;
+  year_of_birth?: number;
+  year_of_death?: number;
+  nationality?: string;
+}
+
 interface AutoSuggestInputProps {
   label: string;
   name: string;
   register: UseFormRegister<any>;
   setValue: UseFormSetValue<any>;
   className?: string;
-  options?: string[];
-  personType: "editor" | "terton" | "translator" | "author";
+  options?: Person[];
+  personType: "editor" | "terton" | "translator" | "author" | "publisher";
 }
+
+interface DetailsPopupProps {
+  person: Person;
+}
+
+const DetailsPopup: React.FC<DetailsPopupProps> = ({ person }) => (
+  <div className="absolute z-20 bg-white border border-black shadow-lg rounded-md p-4 w-64 -translate-x-full">
+    <div className="space-y-3 text-sm">
+      <div className="flex items-center justify-between w-full">
+        <p className="text-secondary-600">སྐྱེས་ལོ།</p>
+        <span className="font-inter px-4 py-1 text-secondary-400 bg-secondary-50 rounded-lg">
+          {person.year_of_birth ?? "null"}
+        </span>
+      </div>
+      <div className="flex items-center justify-between w-full">
+        <p className="text-secondary-600">འདས་ལོ།</p>
+        <span className="font-inter px-4 py-1 text-secondary-400 bg-secondary-50 rounded-lg">
+          {person.year_of_death ?? "null"}
+        </span>
+      </div>
+      <div className="flex items-center justify-between w-full">
+        <p className="text-secondary-600">མི་རིགས།</p>
+        <span className="font-inter px-4 py-1 text-secondary-400 bg-secondary-50 rounded-lg">
+          {person.nationality ?? "null"}
+        </span>
+      </div>
+    </div>
+  </div>
+);
 
 const typeLabels = {
   editor: "རྩོམ་སྒྲིག་པ་",
   terton: "གཏེར་སྟོན་",
   translator: "ལོ་ཙཱ་བ་",
   author: "རྩོམ་པ་པོ་",
+  publisher: "དཔེ་སྐྲུན་པ།",
 };
 
 const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
@@ -29,11 +67,13 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
   options = [],
   personType,
 }) => {
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [suggestions, setSuggestions] = useState<Person[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
+  const [showDetails, setShowDetails] = useState(false);
   const suggestionsRef = useRef<HTMLDivElement>(null);
-  //for outside click
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -43,19 +83,15 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
         setShowSuggestions(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  //for input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setValue(name, value);
-
     if (value.trim()) {
-      const filtered = options.filter((name) =>
-        name.toLowerCase().includes(value.toLowerCase()),
+      const filtered = options.filter((option) =>
+        option.name.toLowerCase().includes(value.toLowerCase()),
       );
       setSuggestions(filtered);
       setShowSuggestions(true);
@@ -63,12 +99,14 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
       setSuggestions([]);
       setShowSuggestions(false);
     }
+    setSelectedPerson(null);
   };
 
-  //for suggestion click set input as per suggestion text
-  const handleSuggestionClick = (suggestion: string) => {
-    setValue(name, suggestion);
-    setShowSuggestions(false);
+  const handleSuggestionClick = (suggestion: Person) => {
+    setValue(name, suggestion.name); // Set the name in the input field
+    register(name).onChange({ target: { value: suggestion.name } }); // Update the form
+    setSelectedPerson(suggestion);
+    setShowSuggestions(false); // Close the suggestions list
   };
 
   return (
@@ -76,14 +114,27 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
       <div className={`relative ${className}`}>
         <div className="flex items-center border-b border-black pb-2 w-fit">
           <label>{label}</label>
-          <input
-            {...register(name)}
-            onChange={handleInputChange}
-            className="ml-4 outline-none"
-            autoComplete="off"
-          />
+          <div className="relative flex items-center ml-4">
+            <input
+              {...register(name)}
+              onChange={handleInputChange}
+              className="outline-none"
+              autoComplete="off"
+            />
+            {selectedPerson && (
+              <div
+                className="relative ml-2"
+                onMouseEnter={() => setShowDetails(true)}
+                onMouseLeave={() => setShowDetails(false)}
+              >
+                <div className="w-5 h-5 bg-blue-500 rounded-full cursor-pointer flex items-center justify-center text-white">
+                  <span>:</span>
+                </div>
+                {showDetails && <DetailsPopup person={selectedPerson} />}
+              </div>
+            )}
+          </div>
         </div>
-
         {showSuggestions && (
           <div
             ref={suggestionsRef}
@@ -91,13 +142,13 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
           >
             <div className="max-h-28 overflow-y-auto">
               {suggestions.length > 0 ? (
-                suggestions.map((suggestion, index) => (
+                suggestions.map((suggestion) => (
                   <div
-                    key={index}
+                    key={suggestion.id}
                     className="p-2 border-b border-black hover:bg-gray-100 cursor-pointer"
                     onClick={() => handleSuggestionClick(suggestion)}
                   >
-                    {suggestion}
+                    {suggestion.name}
                   </div>
                 ))
               ) : (
@@ -116,7 +167,6 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
           </div>
         )}
       </div>
-
       <PersonModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
