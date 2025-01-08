@@ -15,11 +15,11 @@ export interface ItemlistProps {
 }
 
 export interface InputPecha {
-  tsigjang: string;
-  tsenja: string;
-  year: string;
-  author: string;
-  partunMethod: string;
+  title: string;
+  shortentitle: string;
+  year_of_publish: string;
+  collection: string;
+  print_method: string;
   terton: string;
   bdrclink: string;
 }
@@ -77,3 +77,18 @@ export const MinaSchema = z.object({
 });
 
 export type InputMina = z.infer<typeof MinaSchema>;
+
+//person modal
+export const PersonModalSchema = z.object({
+  name: z
+    .string()
+    .min(3, "མིང་ཡིག་འབྲུ་གསུམ་ཡན་དགོས།")
+    .regex(tibetanRegex, "བོད་ཡིག་ནང་འབྲི་རོགས།"),
+  year_of_birth: z.number().min(1, "སྐྱེས་ལོ་ཨང་ཀི་ནང་འབྲི་རོགས།"),
+  year_of_death: z.number().min(1, "འདས་ལོ་ཨང་ཀི་ནང་འབྲི་རོགས།"),
+  nationality: z
+    .string()
+    .min(2, "མི་རིགས་ཡིག་འབྲུ་གཉིས་ཡན་དགོས།")
+    .regex(tibetanRegex, "བོད་ཡིག་ནང་འབྲི་རོགས།"),
+});
+export type InputPersonModal = z.infer<typeof PersonModalSchema>;
