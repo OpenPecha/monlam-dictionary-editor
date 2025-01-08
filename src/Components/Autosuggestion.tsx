@@ -19,14 +19,23 @@ interface AutoSuggestInputProps {
   className?: string;
   options?: Person[];
   personType: "editor" | "terton" | "translator" | "author" | "publisher";
+  disabled?: boolean; // Add disabled prop
 }
 
 interface DetailsPopupProps {
   person: Person;
 }
 
+const typeLabels = {
+  editor: "རྩོམ་སྒྲིག་པ་",
+  terton: "གཏེར་སྟོན་",
+  translator: "ལོ་ཙཱ་བ་",
+  author: "རྩོམ་པ་པོ་",
+  publisher: "དཔེ་སྐྲུན་པ།",
+};
+
 const DetailsPopup: React.FC<DetailsPopupProps> = ({ person }) => (
-  <div className="absolute z-20 bg-white border border-black shadow-lg rounded-md p-4 w-64 -translate-x-full">
+  <div className="absolute z-20 bg-white border border-black shadow-lg p-2 w-44 -translate-x-full">
     <div className="space-y-3 text-sm">
       <div className="flex items-center justify-between w-full">
         <p className="text-secondary-600">སྐྱེས་ལོ།</p>
@@ -42,21 +51,13 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ person }) => (
       </div>
       <div className="flex items-center justify-between w-full">
         <p className="text-secondary-600">མི་རིགས།</p>
-        <span className="font-inter px-4 py-1 text-secondary-400 bg-secondary-50 rounded-lg">
+        <span className="font-monlam px-4 py-1 text-secondary-400 bg-secondary-50 rounded-lg">
           {person.nationality ?? "null"}
         </span>
       </div>
     </div>
   </div>
 );
-
-const typeLabels = {
-  editor: "རྩོམ་སྒྲིག་པ་",
-  terton: "གཏེར་སྟོན་",
-  translator: "ལོ་ཙཱ་བ་",
-  author: "རྩོམ་པ་པོ་",
-  publisher: "དཔེ་སྐྲུན་པ།",
-};
 
 const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
   label,
@@ -66,7 +67,9 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
   className = "",
   options = [],
   personType,
+  disabled = false, // Add default value for disabled
 }) => {
+  const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState<Person[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -89,6 +92,8 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    setInputValue(value);
+
     if (value.trim()) {
       const filtered = options.filter((option) =>
         option.name.toLowerCase().includes(value.toLowerCase()),
@@ -98,15 +103,16 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
     } else {
       setSuggestions([]);
       setShowSuggestions(false);
+      setSelectedPerson(null);
+      setValue(name, "");
     }
-    setSelectedPerson(null);
   };
 
   const handleSuggestionClick = (suggestion: Person) => {
-    setValue(name, suggestion.name); // Set the name in the input field
-    register(name).onChange({ target: { value: suggestion.name } }); // Update the form
+    setInputValue(suggestion.name);
+    setValue(name, suggestion.id);
     setSelectedPerson(suggestion);
-    setShowSuggestions(false); // Close the suggestions list
+    setShowSuggestions(false);
   };
 
   return (
@@ -116,26 +122,31 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
           <label>{label}</label>
           <div className="relative flex items-center ml-4">
             <input
-              {...register(name)}
+              value={inputValue}
               onChange={handleInputChange}
-              className="outline-none"
+              className={`outline-none ${disabled ? "bg-gray-100 cursor-not-allowed" : ""}`}
               autoComplete="off"
+              disabled={disabled}
             />
+            {/* Hidden input to store the actual ID */}
+            <input type="hidden" {...register(name)} disabled={disabled} />
             {selectedPerson && (
               <div
-                className="relative ml-2"
-                onMouseEnter={() => setShowDetails(true)}
-                onMouseLeave={() => setShowDetails(false)}
+                className={`relative ml-2 ${disabled ? "opacity-50" : ""}`}
+                onMouseEnter={() => !disabled && setShowDetails(true)}
+                onMouseLeave={() => !disabled && setShowDetails(false)}
               >
                 <div className="w-5 h-5 bg-blue-500 rounded-full cursor-pointer flex items-center justify-center text-white">
-                  <span>:</span>
+                  <div className="bg-white p-1 rounded-full" />
                 </div>
-                {showDetails && <DetailsPopup person={selectedPerson} />}
+                {showDetails && !disabled && (
+                  <DetailsPopup person={selectedPerson} />
+                )}
               </div>
             )}
           </div>
         </div>
-        {showSuggestions && (
+        {showSuggestions && !disabled && (
           <div
             ref={suggestionsRef}
             className="absolute z-10 mt-1 font-monlam text-sm w-64 bg-white border border-black shadow-lg flex flex-col"
@@ -159,7 +170,7 @@ const AutoSuggestInput: React.FC<AutoSuggestInputProps> = ({
             </div>
             <div
               className="flex items-center border-t border-black justify-between p-2 bg-white cursor-pointer hover:bg-gray-100"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => !disabled && setIsModalOpen(true)}
             >
               <p>སྣོན་པ། </p>
               <FaPlus />

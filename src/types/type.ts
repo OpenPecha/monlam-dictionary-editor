@@ -14,16 +14,6 @@ export interface ItemlistProps {
   searchQuery: string;
 }
 
-// export interface InputPecha {
-//   title: string;
-//   shortentitle: string;
-//   year_of_publish: string;
-//   collection: string;
-//   print_method: string;
-//   terton: string;
-//   bdrclink: string;
-// }
-
 export interface InputTsigsar {
   matsig: string;
   newMatsig: boolean;
@@ -33,14 +23,6 @@ export interface InputTsigsar {
 export interface Props {
   popup: boolean[];
   setPopup: React.Dispatch<React.SetStateAction<boolean[]>>;
-}
-
-export interface AutoSuggestInputProps {
-  label: string;
-  register: any;
-  registerName: string;
-  className?: string;
-  options?: string[];
 }
 
 export interface SubmitsProps {
