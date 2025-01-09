@@ -14,10 +14,12 @@ export interface ItemlistProps {
   searchQuery: string;
 }
 
-export interface InputTsigsar {
-  matsig: string;
-  newMatsig: boolean;
-  gyunchoe: boolean;
+export interface InputWord {
+  lemma: string;
+  is_mordern: boolean;
+  is_reviewed: boolean;
+  is_frequent: boolean;
+  orginId: string;
 }
 
 export interface Props {

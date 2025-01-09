@@ -192,13 +192,13 @@ const Delshey = ({ onClose }: DelsheyProps) => {
                       className="w-full border-b border-black outline-none pb-2"
                       {...register(`subForms.${activeTab}.content`)}
                     />
-                    <AutoSuggestInput
+                    {/* <AutoSuggestInput
                       label="མཚན་བྱང་།"
                       register={register}
                       registerName={`subForms.${activeTab}.mainbook`}
                       className="mt-3"
                       options={DUMMY_AUTHORS}
-                    />
+                    /> */}
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 mt-4">
