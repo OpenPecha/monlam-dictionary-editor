@@ -1,20 +1,15 @@
-import React from 'react'
+import React from "react";
 import { UseFormRegister } from "react-hook-form";
-
-interface Input {
-  matsig: string,
-  newMatsig: boolean,
-  gyunchoe: boolean,
-}
+import { InputWord } from "../types/type";
 
 interface Props {
-  register: UseFormRegister<Input>;
-  value: string,
+  register: UseFormRegister<InputWord>;
+  value: string;
 }
 
-const Toggle: React.FC<Props> = ( { register, value }) => {
+const Toggle: React.FC<Props> = ({ register, value }) => {
   const registerProps =
-    value === "newMatsig" ? register("newMatsig") : register("gyunchoe");
+    value === "is_mordern" ? register("is_mordern") : register("is_frequent");
   return (
     <div>
       <div className=" ml-2 mt-3 flex items-center justify-center">
@@ -25,7 +20,7 @@ const Toggle: React.FC<Props> = ( { register, value }) => {
         </label>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Toggle
+export default Toggle;
