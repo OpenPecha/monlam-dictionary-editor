@@ -14,14 +14,6 @@ export interface ItemlistProps {
   searchQuery: string;
 }
 
-export interface InputWord {
-  lemma: string;
-  is_mordern: boolean;
-  is_reviewed: boolean;
-  is_frequent: boolean;
-  orginId: string;
-}
-
 export interface Props {
   popup: boolean[];
   setPopup: React.Dispatch<React.SetStateAction<boolean[]>>;
@@ -80,10 +72,16 @@ export const PersonModalSchema = z.object({
 
 // Define your Zod schema for the form
 export const PechaSchema = z.object({
-  title: z.string().min(1, "Title is required"),
-  shortentitle: z.string().min(1, "Short title is required"),
+  title: z
+    .string()
+    .min(1, "Title is required")
+    .regex(tibetanRegex, "བོད་ཡིག་ནང་འབྲི་རོགས།"),
+  shortentitle: z
+    .string()
+    .min(1, "Short title is required")
+    .regex(tibetanRegex, "བོད་ཡིག་ནང་འབྲི་རོགས།"),
   year_of_publish: z.number().min(1, "Publication year is required"),
-  collection: z.string(),
+  collection: z.string().regex(tibetanRegex, "བོད་ཡིག་ནང་འབྲི་རོགས།"),
   print_methodId: z.string(),
   editorId: z.string(),
   tertonId: z.string(),
@@ -103,3 +101,39 @@ export type InputPersonModal = {
   year_of_death?: number;
   nationality?: string;
 };
+
+//word
+export const WordSchema = z.object({
+  lemma: z.string().min(1).regex(tibetanRegex, "བོད་ཡིག་ནང་འབྲི་རོགས།"),
+  is_mordern: z.boolean(),
+  is_reviewed: z.boolean(),
+  is_frequent: z.boolean(),
+  originId: z.string(),
+});
+
+export type InputWord = z.infer<typeof WordSchema>;
+
+const CitationSchema = z.object({
+  text: z.string().min(1, {
+    message:
+      "མཆན་འགྲེལ་གྱི་ནང་དོན་སྟོང་པ་འཇོག་མི་ཆོག / Citation text cannot be empty",
+  }),
+  location: z.object({}).passthrough(),
+  bookId: z.string(),
+});
+//sense
+export const SenseSchema = z.object({
+  description: z.string().min(1).regex(tibetanRegex, "བོད་ཡིག་ནང་འབྲི་རོགས།"),
+  has_illustration: z.boolean(),
+  example_sentence: z
+    .string()
+    .min(1)
+    .regex(tibetanRegex, "བོད་ཡིག་ནང་འབྲི་རོགས།"),
+  posId: z.string(),
+  name_entityId: z.string(),
+  registerId: z.string(),
+  wordId: z.number(),
+  citationIds: z.array(CitationSchema).default([]),
+});
+
+export type InputSense = z.infer<typeof SenseSchema>;

@@ -122,7 +122,7 @@ const Pecha = () => {
     console.log(data);
     try {
       const response = await axios.post(
-        `https://api.monlamdictionary.com/api/grand/metadata/book/create`,
+        "https://api.monlamdictionary.com/api/grand/metadata/book/create",
         data,
         {
           headers: {
